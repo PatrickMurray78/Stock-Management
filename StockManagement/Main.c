@@ -5,6 +5,7 @@
 
 #include "Database.h"
 
+void saveDatabase(struct node* top);
 void addItemAtStart(struct node** top);
 void addItemAtEnd(struct node* top);
 void displayDatabase(struct node* top);
@@ -56,6 +57,7 @@ void main()
 			case 8:
 				break;
 			case -1:
+				saveDatabase(headPtr);
 				printf("Goodbye.");
 				break;
 			default:
@@ -66,6 +68,26 @@ void main()
 	} while (mode != -1);
 	
 	_getch();
+}
+
+void saveDatabase(struct node* top)
+{
+	FILE* fptr;
+	fptr = fopen("database.txt", "w");
+
+	struct node* temp = top;
+
+	while (temp != NULL)
+	{
+		fprintf(fptr, "%d %s", temp->number, temp->name);
+		fprintf(fptr, "\n%s %ld", temp->supplierName, temp->supplierNumber);
+		fprintf(fptr, "\n%d %d %.2f", temp->thresholdLimit, temp->numOfUnits, temp->costPerUnit);
+		fprintf(fptr, "\n%d %d %d %d %d\n\n", temp->lastOrderDate, temp->isHazardousChemical,
+				temp->department, temp->reOrderMonth, temp->authority);
+		temp = temp->NEXT;
+	}
+
+	fclose(fptr);
 }
 
 void addItemAtStart(struct node** top)
