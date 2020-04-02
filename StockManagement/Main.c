@@ -5,6 +5,7 @@
 
 #include "Database.h"
 
+void init(struct node** top, struct node* top2);
 void saveDatabase(struct node* top);
 void addItemAtStart(struct node** top);
 void addItemAtEnd(struct node* top);
@@ -15,6 +16,8 @@ void main()
 {
 	struct node* headPtr = NULL;
 	int mode;
+
+	init(&headPtr, headPtr);
 
 	do
 	{
@@ -68,6 +71,53 @@ void main()
 	} while (mode != -1);
 	
 	_getch();
+}
+
+void init(struct node** top, struct node* top2)
+{
+	int numInputs, count = 0;
+	FILE* fptr;
+	fptr = fopen("database.txt", "r");
+
+	struct node* temp = top2;
+	struct node* newNode = (struct node*)malloc(sizeof(struct node));
+
+	if (fptr == NULL)
+	{
+		printf("\nSorry the file could not be opened");
+	}
+	else
+	{
+		while (!feof(fptr))
+		{
+			numInputs = fscanf(fptr, "%d %s", &newNode->number, &newNode->name);
+			numInputs += fscanf(fptr, "%s %ld", newNode->supplierName, &newNode->supplierNumber);
+			numInputs += fscanf(fptr, "%d %d %f", &newNode->thresholdLimit, &newNode->numOfUnits, &newNode->costPerUnit);
+			numInputs += fscanf(fptr, "%d %d %d %d %d", &newNode->lastOrderDate, &newNode->isHazardousChemical,
+				&newNode->department, &newNode->reOrderMonth, &newNode->authority);
+
+			if (numInputs == 12)
+			{
+				if (count == 0)
+				{
+					newNode->NEXT = *top;
+					*top = newNode;
+					count++;
+				}
+				else
+				{
+					while (temp->NEXT != NULL)
+					{
+						temp = temp->NEXT;
+					}
+
+					newNode->NEXT = NULL;
+					temp->NEXT = newNode;
+				}
+			}
+		}
+	}
+	fclose(fptr);
 }
 
 void saveDatabase(struct node* top)
