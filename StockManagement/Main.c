@@ -7,6 +7,7 @@
 
 void addItemAtStart(struct node** top);
 void addItemAtEnd(struct node* top);
+void displayDatabase(struct node* top);
 
 void main()
 {
@@ -39,6 +40,7 @@ void main()
 				}
 				break;
 			case 2:
+				displayDatabase(headPtr);
 				break;
 			case 3:
 				break;
@@ -165,4 +167,27 @@ void addItemAtEnd(struct node* top)
 
 	newNode->NEXT = NULL;
 	temp->NEXT = newNode;
+}
+
+void displayDatabase(struct node* top)
+{
+	struct node* temp = top;
+
+	while (temp != NULL)
+	{
+		printf("\nStock Item Number: %d", temp->number);
+		printf("\nStock Item Name: %s", temp->name);
+		printf("\nStock Item Supplier Name: %s", temp->supplierName);
+		printf("\nStock Item Supplier Contact Number: %d", temp->supplierNumber);
+		printf("\nRe-order threshold limit: %d", temp->thresholdLimit);
+		printf("\nNumber of Units: %d", temp->numOfUnits);
+		printf("\nCost per Unit: %f", temp->costPerUnit);
+		printf("\nLast Order Date(DDMMYYYY): %d", temp->lastOrderDate);
+		printf("\nDoes this item need to be stored in a hazardous chemical store?");
+		printf("\n-> %d", temp->isHazardousChemical);
+		printf("\nDepartment: %d", temp->department);
+		printf("\nRe-order Month: %d", temp->reOrderMonth);
+		printf("\nAuthority: %d\n", temp->authority);
+		temp = temp->NEXT;
+	}
 }
