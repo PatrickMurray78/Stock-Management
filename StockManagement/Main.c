@@ -8,6 +8,7 @@
 void addItemAtStart(struct node** top);
 void addItemAtEnd(struct node* top);
 void displayDatabase(struct node* top);
+void displayItem(struct node* top);
 
 void main()
 {
@@ -189,5 +190,77 @@ void displayDatabase(struct node* top)
 		printf("\nRe-order Month: %d", temp->reOrderMonth);
 		printf("\nAuthority: %d\n", temp->authority);
 		temp = temp->NEXT;
+	}
+}
+
+void displayItem(struct node* top)
+{
+	struct node* temp;
+	int option, searchNum;
+	char searchName[30];
+	int i = 0;
+
+	temp = top;
+
+	printf("\nWould you like to search by:");
+	printf("\n1. Stock Item Number");
+	printf("\n2. Stock Item Name");
+	printf("\n=> ");
+	scanf("%d", &option);
+	if (option == 1)
+	{
+		printf("\nPlease enter the Stock Item Number");
+		printf("\n=> ");
+		scanf("%d", &searchNum);
+		while (temp != NULL)
+		{
+			i++;
+			if (temp->number == searchNum)
+			{
+				printf("\nStock Item Number: %d", temp->number);
+				printf("\nStock Item Name: %s", temp->name);
+				printf("\nStock Item Supplier Name: %s", temp->supplierName);
+				printf("\nStock Item Supplier Contact Number: %d", temp->supplierNumber);
+				printf("\nRe-order threshold limit: %d", temp->thresholdLimit);
+				printf("\nNumber of Units: %d", temp->numOfUnits);
+				printf("\nCost per Unit: %f", temp->costPerUnit);
+				printf("\nLast Order Date(DDMMYYYY): %d", temp->lastOrderDate);
+				printf("\nDoes this item need to be stored in a hazardous chemical store?");
+				printf("\n-> %d", temp->isHazardousChemical);
+				printf("\nDepartment: %d", temp->department);
+				printf("\nRe-order Month: %d", temp->reOrderMonth);
+				printf("\nAuthority: %d\n", temp->authority);
+			}
+
+			temp = temp->NEXT;
+		}
+
+	}
+	else {
+		printf("\nPlease enter the Stock Item Name");
+		printf("\n=> ");
+		scanf("%s", searchName);
+		while (temp != NULL)
+		{
+			i++;
+			if (temp->name == searchName)
+			{
+				printf("\nStock Item Number: %d", temp->number);
+				printf("\nStock Item Name: %s", temp->name);
+				printf("\nStock Item Supplier Name: %s", temp->supplierName);
+				printf("\nStock Item Supplier Contact Number: %d", temp->supplierNumber);
+				printf("\nRe-order threshold limit: %d", temp->thresholdLimit);
+				printf("\nNumber of Units: %d", temp->numOfUnits);
+				printf("\nCost per Unit: %f", temp->costPerUnit);
+				printf("\nLast Order Date(DDMMYYYY): %d", temp->lastOrderDate);
+				printf("\nDoes this item need to be stored in a hazardous chemical store?");
+				printf("\n-> %d", temp->isHazardousChemical);
+				printf("\nDepartment: %d", temp->department);
+				printf("\nRe-order Month: %d", temp->reOrderMonth);
+				printf("\nAuthority: %d\n", temp->authority);
+			}
+
+			temp = temp->NEXT;
+		}
 	}
 }
