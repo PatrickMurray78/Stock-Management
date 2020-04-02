@@ -1,7 +1,6 @@
 #pragma once
 
-typedef struct
-{
+typedef struct node {
 	int number;
 	char name[20];
 	char supplierName[20];
@@ -9,9 +8,11 @@ typedef struct
 	int thresholdLimit;
 	int numOfUnits;
 	float costPerUnit;
-	char lastOrderData[20];
-	char hazardousChemical[10];
-	char department[10];
-	char reOrderMonth[20];
-	char authority[20];
+	int lastOrderDate;
+	int isHazardousChemical;
+	int department;
+	int reOrderMonth;
+	int authority;
+	struct node* PREV;
+	struct node* NEXT;
 }database;
