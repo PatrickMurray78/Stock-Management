@@ -5,19 +5,22 @@
 
 #include "Database.h"
 
-void init(struct node** top, struct node* top2);
+void init(struct node** top);
+void addEnd(struct node* top);
 void saveDatabase(struct node* top);
 void addItemAtStart(struct node** top);
 void addItemAtEnd(struct node* top);
 void displayDatabase(struct node* top);
 void displayItem(struct node* top);
+void updateItem(struct node* top);
 
 void main()
 {
 	struct node* headPtr = NULL;
 	int mode;
 
-	init(&headPtr, headPtr);
+	init(&headPtr);
+	addEnd(headPtr);
 
 	do
 	{
@@ -48,8 +51,10 @@ void main()
 				displayDatabase(headPtr);
 				break;
 			case 3:
+				displayItem(headPtr);
 				break;
 			case 4:
+				updateItem(headPtr);
 				break;
 			case 5:
 				break;
@@ -73,13 +78,43 @@ void main()
 	_getch();
 }
 
-void init(struct node** top, struct node* top2)
+void init(struct node** top)
 {
 	int numInputs, count = 0;
 	FILE* fptr;
 	fptr = fopen("database.txt", "r");
 
-	struct node* temp = top2;
+	struct node* newNode = (struct node*)malloc(sizeof(struct node));
+
+	if (fptr == NULL)
+	{
+		printf("\nSorry the file could not be opened");
+	}
+	else
+	{
+			numInputs = fscanf(fptr, "%d %s", &newNode->number, &newNode->name);
+			numInputs += fscanf(fptr, "%s %ld", newNode->supplierName, &newNode->supplierNumber);
+			numInputs += fscanf(fptr, "%d %d %f", &newNode->thresholdLimit, &newNode->numOfUnits, &newNode->costPerUnit);
+			numInputs += fscanf(fptr, "%d %d %d %d %d", &newNode->lastOrderDate, &newNode->isHazardousChemical,
+				&newNode->department, &newNode->reOrderMonth, &newNode->authority);
+
+
+			if (numInputs == 12)
+			{
+				newNode->NEXT = *top;
+				*top = newNode;
+			}
+	}
+	fclose(fptr);
+}
+
+void addEnd(struct node* top)
+{
+	int numInputs, count = 0;
+	FILE* fptr;
+	fptr = fopen("database.txt", "r");
+
+	struct node* temp = top;
 	struct node* newNode = (struct node*)malloc(sizeof(struct node));
 
 	if (fptr == NULL)
@@ -90,22 +125,15 @@ void init(struct node** top, struct node* top2)
 	{
 		while (!feof(fptr))
 		{
-			numInputs = fscanf(fptr, "%d %s", &newNode->number, &newNode->name);
-			numInputs += fscanf(fptr, "%s %ld", newNode->supplierName, &newNode->supplierNumber);
-			numInputs += fscanf(fptr, "%d %d %f", &newNode->thresholdLimit, &newNode->numOfUnits, &newNode->costPerUnit);
-			numInputs += fscanf(fptr, "%d %d %d %d %d", &newNode->lastOrderDate, &newNode->isHazardousChemical,
-				&newNode->department, &newNode->reOrderMonth, &newNode->authority);
+		numInputs = fscanf(fptr, "%d %s", &newNode->number, &newNode->name);
+		numInputs += fscanf(fptr, "%s %ld", newNode->supplierName, &newNode->supplierNumber);
+		numInputs += fscanf(fptr, "%d %d %f", &newNode->thresholdLimit, &newNode->numOfUnits, &newNode->costPerUnit);
+		numInputs += fscanf(fptr, "%d %d %d %d %d", &newNode->lastOrderDate, &newNode->isHazardousChemical,
+			&newNode->department, &newNode->reOrderMonth, &newNode->authority);
 
-			if (numInputs == 12)
+
+			if (numInputs == 12 && count != 0)
 			{
-				if (count == 0)
-				{
-					newNode->NEXT = *top;
-					*top = newNode;
-					count++;
-				}
-				else
-				{
 					while (temp->NEXT != NULL)
 					{
 						temp = temp->NEXT;
@@ -113,8 +141,8 @@ void init(struct node** top, struct node* top2)
 
 					newNode->NEXT = NULL;
 					temp->NEXT = newNode;
-				}
 			}
+			count++;
 		}
 	}
 	fclose(fptr);
@@ -270,7 +298,6 @@ void displayItem(struct node* top)
 	struct node* temp;
 	int option, searchNum;
 	char searchName[30];
-	int i = 0;
 
 	temp = top;
 
@@ -286,7 +313,6 @@ void displayItem(struct node* top)
 		scanf("%d", &searchNum);
 		while (temp != NULL)
 		{
-			i++;
 			if (temp->number == searchNum)
 			{
 				printf("\nStock Item Number: %d", temp->number);
@@ -314,7 +340,6 @@ void displayItem(struct node* top)
 		scanf("%s", searchName);
 		while (temp != NULL)
 		{
-			i++;
 			if (temp->name == searchName)
 			{
 				printf("\nStock Item Number: %d", temp->number);
@@ -330,6 +355,63 @@ void displayItem(struct node* top)
 				printf("\nDepartment: %d", temp->department);
 				printf("\nRe-order Month: %d", temp->reOrderMonth);
 				printf("\nAuthority: %d\n", temp->authority);
+			}
+
+			temp = temp->NEXT;
+		}
+	}
+}
+
+void updateItem(struct node* top)
+{
+	struct node* temp;
+	int option, searchNum, ret;
+	char searchName[30];
+	int i = 0;
+
+	temp = top;
+
+	printf("\nWould you like to search by:");
+	printf("\n1. Stock Item Number");
+	printf("\n2. Stock Item Name");
+	printf("\n=> ");
+	scanf("%d", &option);
+	if (option == 1)
+	{
+		printf("\nPlease enter the Stock Item Number");
+		printf("\n=> ");
+		scanf("%d", &searchNum);
+		while (temp != NULL)
+		{
+			if (temp->number == searchNum)
+			{
+				printf("\nNew Stock Item Supplier Name: ");
+				scanf("%s", temp->supplierName);
+				printf("New Stock Item Supplier Contact Number: ");
+				scanf("%ld", &temp->supplierNumber);
+				printf("New Re-order threshold limit: ");
+				scanf("%d", &temp->thresholdLimit);
+			}
+
+			temp = temp->NEXT;
+		}
+
+	}
+	else {
+		printf("\nPlease enter the Stock Item Name");
+		printf("\n=> ");
+		scanf("%s", searchName);
+		while (temp != NULL)
+		{
+			ret = strcmp(temp->name, searchName);
+			if (ret == 0)
+			{
+				printf("\nNew Stock Item Supplier Name: ");
+				scanf("%s", temp->supplierName);
+				printf("New Stock Item Supplier Contact Number: ");
+				scanf("%ld", &temp->supplierNumber);
+				printf("New Re-order threshold limit: ");
+				scanf("%d", &temp->thresholdLimit);
 			}
 
 			temp = temp->NEXT;
