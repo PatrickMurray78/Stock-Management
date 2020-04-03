@@ -296,7 +296,7 @@ void displayDatabase(struct node* top)
 void displayItem(struct node* top)
 {
 	struct node* temp;
-	int option, searchNum;
+	int option, searchNum, ret;
 	char searchName[30];
 
 	temp = top;
@@ -340,7 +340,8 @@ void displayItem(struct node* top)
 		scanf("%s", searchName);
 		while (temp != NULL)
 		{
-			if (temp->name == searchName)
+			ret = strcmp(temp->name, searchName);
+			if (ret == 0)
 			{
 				printf("\nStock Item Number: %d", temp->number);
 				printf("\nStock Item Name: %s", temp->name);
