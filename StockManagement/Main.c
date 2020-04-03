@@ -14,7 +14,7 @@ void displayDatabase(struct node* top);
 void displayItem(struct node* top);
 void updateItem(struct node* top);
 void deleteItemAtStart(struct node** top);
-void deleteItemAtEnd(struct node* top);
+void deleteItemAtEnd(struct node* top, struct node* prev);
 void deleteItem(struct node* top);
 
 void main()
@@ -71,7 +71,6 @@ void main()
 				else
 				{
 					deleteItem(headPtr);
-					//deleteItemAtEnd(headPtr);
 				}
 				break;
 			case 6:
@@ -456,29 +455,13 @@ void deleteItemAtStart(struct node** top)
 	}
 }
 
-void deleteItemAtEnd(struct node* top)
+void deleteItemAtEnd(struct node* top, struct node* prev)
 {
-	int searchNum;
 	struct node* temp = top;
-	struct node* prevTemp;
+	struct node* prevTemp = prev;
 
-	printf("\nPlease enter Stock Item Number to delete: ");
-	scanf("%d", &searchNum);
-		while (temp->NEXT != NULL)
-		{
-			 prevTemp = temp;
-			temp = temp->NEXT;
-		}
-		if (temp->number == searchNum)
-		{
-			prevTemp->NEXT = NULL;
-			free(temp);
-		}
-		else 
-		{
-			printf("\nStock Item not found!");
-			deleteItemAtEnd(top);
-		}
+		prevTemp->NEXT = NULL;
+		free(temp);
 }
 
 void deleteItem(struct node* top)
@@ -500,5 +483,5 @@ void deleteItem(struct node* top)
 		free(temp);
 	}
 	printf("\nStock Item not found!");
-	deleteItemAtEnd(top);
+	deleteItemAtEnd(top, prevTemp);
 }
