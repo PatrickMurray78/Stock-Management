@@ -16,6 +16,7 @@ void updateItem(struct node* top);
 void deleteItemAtStart(struct node** top);
 void deleteItemAtEnd(struct node* top, struct node* prev);
 void deleteItem(struct node* top);
+void length(struct node* top);
 
 void main()
 {
@@ -24,6 +25,7 @@ void main()
 
 	init(&headPtr);
 	addEnd(headPtr);
+	
 
 	do
 	{
@@ -130,35 +132,30 @@ void addEnd(struct node* top)
 	fptr = fopen("database.txt", "r");
 
 	struct node* temp = top;
-	struct node* newNode = (struct node*)malloc(sizeof(struct node));
 
-	if (fptr == NULL)
+	while (!feof(fptr))
 	{
-		printf("\nSorry the file could not be opened");
-	}
-	else
-	{
-		while (!feof(fptr))
-		{
+		struct node* newNode = (struct node*)malloc(sizeof(struct node));
 		numInputs = fscanf(fptr, "%d %s", &newNode->number, &newNode->name);
 		numInputs += fscanf(fptr, "%s %ld", newNode->supplierName, &newNode->supplierNumber);
 		numInputs += fscanf(fptr, "%d %d %f", &newNode->thresholdLimit, &newNode->numOfUnits, &newNode->costPerUnit);
 		numInputs += fscanf(fptr, "%d %d %d %d %d", &newNode->lastOrderDate, &newNode->isHazardousChemical,
 			&newNode->department, &newNode->reOrderMonth, &newNode->authority);
 
+		if (numInputs == 12 && count != 0)
+		{
+				while (temp->NEXT != NULL)
+				{
+					temp = temp->NEXT;
+				}
 
-			if (numInputs == 12 && count != 0)
-			{
-					while (temp->NEXT != NULL)
-					{
-						temp = temp->NEXT;
-					}
-
+				if (temp->NEXT == NULL)
+				{
 					newNode->NEXT = NULL;
 					temp->NEXT = newNode;
-			}
-			count++;
+				}
 		}
+		count++;
 	}
 	fclose(fptr);
 }
@@ -311,7 +308,7 @@ void displayDatabase(struct node* top)
 void displayItem(struct node* top)
 {
 	struct node* temp;
-	int option, searchNum, ret;
+	int option, searchNum, ret, count = 0;
 	char searchName[30];
 
 	temp = top;
@@ -326,7 +323,7 @@ void displayItem(struct node* top)
 		printf("\nPlease enter the Stock Item Number");
 		printf("\n=> ");
 		scanf("%d", &searchNum);
-		while (temp != NULL)
+		while (temp != NULL && count < 5)
 		{
 			if (temp->number == searchNum)
 			{
@@ -481,7 +478,22 @@ void deleteItem(struct node* top)
 	{
 		prevTemp->NEXT = temp->NEXT;
 		free(temp);
+		return;
 	}
 	printf("\nStock Item not found!");
 	deleteItemAtEnd(top, prevTemp);
+}
+
+void length(struct node* top)
+{
+	struct node* temp;
+	temp = top;
+	int i = 0;
+	while (temp != NULL)
+	{
+		i++;
+		temp = temp->NEXT;
+	}
+
+	printf("The length of the list is %d\n", i);
 }
