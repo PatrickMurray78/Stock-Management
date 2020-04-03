@@ -15,6 +15,7 @@ void displayItem(struct node* top);
 void updateItem(struct node* top);
 void deleteItemAtStart(struct node** top);
 void deleteItemAtEnd(struct node* top);
+void deleteItem(struct node* top);
 
 void main()
 {
@@ -69,7 +70,8 @@ void main()
 				}
 				else
 				{
-					deleteItemAtEnd(headPtr);
+					deleteItem(headPtr);
+					//deleteItemAtEnd(headPtr);
 				}
 				break;
 			case 6:
@@ -477,4 +479,26 @@ void deleteItemAtEnd(struct node* top)
 			printf("\nStock Item not found!");
 			deleteItemAtEnd(top);
 		}
+}
+
+void deleteItem(struct node* top)
+{
+	int searchNum;
+	struct node* temp = top;
+	struct node* prevTemp;
+	 
+	printf("\nPlease enter Stock Item Number to delete: ");
+	scanf("%d", &searchNum);
+	while (temp->NEXT != NULL && temp->number != searchNum)
+	{
+		prevTemp = temp;
+		temp = temp->NEXT;
+	}
+	if (temp->number && temp->NEXT != NULL)
+	{
+		prevTemp->NEXT = temp->NEXT;
+		free(temp);
+	}
+	printf("\nStock Item not found!");
+	deleteItemAtEnd(top);
 }
