@@ -13,6 +13,7 @@ void addItemAtEnd(struct node* top);
 void displayDatabase(struct node* top);
 void displayItem(struct node* top);
 void updateItem(struct node* top);
+void deleteItemAtStart(struct node** top);
 
 void main()
 {
@@ -57,6 +58,18 @@ void main()
 				updateItem(headPtr);
 				break;
 			case 5:
+				if (headPtr == NULL)
+				{
+					printf("Sorry the database is empty");
+				}
+				else if (headPtr->NEXT == NULL)
+				{
+					deleteItemAtStart(&headPtr);
+				}
+				else
+				{
+				
+				}
 				break;
 			case 6:
 				break;
@@ -417,5 +430,25 @@ void updateItem(struct node* top)
 
 			temp = temp->NEXT;
 		}
+	}
+}
+
+void deleteItemAtStart(struct node** top)
+{
+	int searchNum, ret;
+	struct node* temp;
+
+	printf("\nPlease enter Stock Item Number to delete: ");
+	scanf("%d", &searchNum);
+	ret = strcmp(temp->name, searchNum);
+	if (ret == 0)
+	{
+		temp = *top;
+		*top = temp->NEXT;
+
+		free(temp);
+	}
+	else {
+		printf("\nStock Item not found!");
 	}
 }
