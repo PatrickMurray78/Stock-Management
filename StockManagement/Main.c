@@ -16,6 +16,7 @@ void updateItem(struct node* top);
 void deleteItem(struct node* top, struct node** top2);
 int length(struct node* top);
 void generateStats(struct node* top);
+void printToFile(struct node* top);
 
 void main()
 {
@@ -74,6 +75,7 @@ void main()
 				generateStats(headPtr);
 				break;
 			case 7:
+				printToFile(headPtr);
 				break;
 			case 8:
 				break;
@@ -625,6 +627,25 @@ void generateStats(struct node* top)
 			stockPercentage = (count / size) * 100;
 		}
 		printf("\nThere are %.2f%% items above twice the re-order threshold limit\n", stockPercentage);
-
 	}
+}
+
+void printToFile(struct node* top)
+{
+	FILE* fptr;
+	fptr = fopen("report.txt", "w");
+
+	struct node* temp = top;
+
+	while (temp != NULL)
+	{
+		fprintf(fptr, "%d %s", temp->number, temp->name);
+		fprintf(fptr, "\n%s %ld", temp->supplierName, temp->supplierNumber);
+		fprintf(fptr, "\n%d %d %.2f", temp->thresholdLimit, temp->numOfUnits, temp->costPerUnit);
+		fprintf(fptr, "\n%d %d %d %d %d\n\n", temp->lastOrderDate, temp->isHazardousChemical,
+			temp->department, temp->reOrderMonth, temp->authority);
+		temp = temp->NEXT;
+	}
+
+	fclose(fptr);
 }
