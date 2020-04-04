@@ -4,11 +4,11 @@ typedef struct node {
 	int number;
 	char name[20];
 	char supplierName[20];
-	int supplierNumber;
+	long supplierNumber;
 	int thresholdLimit;
 	int numOfUnits;
 	float costPerUnit;
-	int lastOrderDate;
+	char lastOrderDate[10];
 	int isHazardousChemical;
 	int department;
 	int reOrderMonth;

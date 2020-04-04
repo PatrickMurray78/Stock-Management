@@ -17,6 +17,7 @@ void deleteItem(struct node* top, struct node** top2);
 int length(struct node* top);
 void generateStats(struct node* top);
 void printToFile(struct node* top);
+void stockInOrder(struct node* top);
 
 void main()
 {
@@ -78,6 +79,7 @@ void main()
 				printToFile(headPtr);
 				break;
 			case 8:
+				stockInOrder(headPtr);
 				break;
 			case -1:
 				saveDatabase(headPtr);
@@ -796,4 +798,54 @@ void printToFile(struct node* top)
 	fprintf(fptr, "\nThere are %.2f%% items above twice the re-order threshold limit in the Maintenance Department\n", stockPercentage);
 	count = 0;
 	fclose(fptr);
+}
+
+void stockInOrder(struct node* top)
+{
+	int sorted = 0;
+	int count = 0;
+	int highestStockNum = 0;
+	float highest, newHighest, value;
+	struct node* temp = top;
+	highest = (float)temp->numOfUnits * temp->costPerUnit;
+	highestStockNum = temp->number;
+	for(int i = 0; i < length(top); i++)
+	{
+		count++;
+		while (temp != NULL)
+		{
+			
+			value = temp->numOfUnits * temp->costPerUnit;
+			if (value > highest && count == 1)
+			{
+				highest = value;
+				newHighest = highest;
+				highestStockNum = temp->number;
+				
+			}
+			else if (value < highest && count != 1)
+			{
+				if (newHighest == highest)
+				{
+					newHighest = value;
+				}
+				if (value > newHighest && value < highest)
+				{
+					newHighest = value;
+					highestStockNum = temp->number;
+				}
+				else if (value == newHighest && value < highest)
+				{
+					newHighest = value;
+					highestStockNum = temp->number;
+				}
+			}
+			temp = temp->NEXT;
+		}
+		highest = newHighest;
+		printf("\nStock Number: %d Value: $%.2f", highestStockNum, highest);
+		value = 0;
+		temp = top;
+	}
+	printf("\n");
 }
