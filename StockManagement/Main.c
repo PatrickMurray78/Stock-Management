@@ -110,7 +110,7 @@ void init(struct node** top)
 			numInputs = fscanf(fptr, "%d %s", &newNode->number, &newNode->name);
 			numInputs += fscanf(fptr, "%s %ld", newNode->supplierName, &newNode->supplierNumber);
 			numInputs += fscanf(fptr, "%d %d %f", &newNode->thresholdLimit, &newNode->numOfUnits, &newNode->costPerUnit);
-			numInputs += fscanf(fptr, "%d %d %d %d %d", &newNode->lastOrderDate, &newNode->isHazardousChemical,
+			numInputs += fscanf(fptr, "%s %d %d %d %d", newNode->lastOrderDate, &newNode->isHazardousChemical,
 				&newNode->department, &newNode->reOrderMonth, &newNode->authority);
 
 
@@ -137,7 +137,7 @@ void addEnd(struct node* top)
 		numInputs = fscanf(fptr, "%d %s", &newNode->number, &newNode->name);
 		numInputs += fscanf(fptr, "%s %ld", newNode->supplierName, &newNode->supplierNumber);
 		numInputs += fscanf(fptr, "%d %d %f", &newNode->thresholdLimit, &newNode->numOfUnits, &newNode->costPerUnit);
-		numInputs += fscanf(fptr, "%d %d %d %d %d", &newNode->lastOrderDate, &newNode->isHazardousChemical,
+		numInputs += fscanf(fptr, "%s %d %d %d %d", newNode->lastOrderDate, &newNode->isHazardousChemical,
 			&newNode->department, &newNode->reOrderMonth, &newNode->authority);
 
 		if (numInputs == 12 && count != 0)
@@ -170,7 +170,7 @@ void saveDatabase(struct node* top)
 		fprintf(fptr, "%d %s", temp->number, temp->name);
 		fprintf(fptr, "\n%s %ld", temp->supplierName, temp->supplierNumber);
 		fprintf(fptr, "\n%d %d %.2f", temp->thresholdLimit, temp->numOfUnits, temp->costPerUnit);
-		fprintf(fptr, "\n%d %d %d %d %d\n\n", temp->lastOrderDate, temp->isHazardousChemical,
+		fprintf(fptr, "\n%s %d %d %d %d\n\n", temp->lastOrderDate, temp->isHazardousChemical,
 				temp->department, temp->reOrderMonth, temp->authority);
 		temp = temp->NEXT;
 	}
@@ -198,7 +198,7 @@ void addItemAtStart(struct node** top)
 	printf("Cost per Unit: ");
 	scanf("%f", &newNode->costPerUnit);
 	printf("Last Order Date(DDMMYYYY): ");
-	scanf("%d", &newNode->lastOrderDate);
+	scanf("%s", newNode->lastOrderDate);
 	printf("Does this item need to be stored in a hazardous chemical store?");
 	printf("\n1. Yes");
 	printf("\n2. No");
@@ -247,7 +247,7 @@ void addItemAtEnd(struct node* top)
 	printf("Cost per Unit: ");
 	scanf("%f", &newNode->costPerUnit);
 	printf("Last Order Date(DDMMYYYY): ");
-	scanf("%d", &newNode->lastOrderDate);
+	scanf("%s", newNode->lastOrderDate);
 	printf("Does this item need to be stored in a hazardous chemical store?");
 	printf("\n1. Yes");
 	printf("\n2. No");
@@ -293,7 +293,7 @@ void displayDatabase(struct node* top)
 		printf("\nRe-order threshold limit: %d", temp->thresholdLimit);
 		printf("\nNumber of Units: %d", temp->numOfUnits);
 		printf("\nCost per Unit: %f", temp->costPerUnit);
-		printf("\nLast Order Date(DDMMYYYY): %d", temp->lastOrderDate);
+		printf("\nLast Order Date(DDMMYYYY): %s", temp->lastOrderDate);
 		printf("\nDoes this item need to be stored in a hazardous chemical store?");
 		printf("\n-> %d", temp->isHazardousChemical);
 		printf("\nDepartment: %d", temp->department);
@@ -332,7 +332,7 @@ void displayItem(struct node* top)
 				printf("\nRe-order threshold limit: %d", temp->thresholdLimit);
 				printf("\nNumber of Units: %d", temp->numOfUnits);
 				printf("\nCost per Unit: %f", temp->costPerUnit);
-				printf("\nLast Order Date(DDMMYYYY): %d", temp->lastOrderDate);
+				printf("\nLast Order Date(DDMMYYYY): %s", temp->lastOrderDate);
 				printf("\nDoes this item need to be stored in a hazardous chemical store?");
 				printf("\n-> %d", temp->isHazardousChemical);
 				printf("\nDepartment: %d", temp->department);
@@ -360,7 +360,7 @@ void displayItem(struct node* top)
 				printf("\nRe-order threshold limit: %d", temp->thresholdLimit);
 				printf("\nNumber of Units: %d", temp->numOfUnits);
 				printf("\nCost per Unit: %f", temp->costPerUnit);
-				printf("\nLast Order Date(DDMMYYYY): %d", temp->lastOrderDate);
+				printf("\nLast Order Date(DDMMYYYY): %s", temp->lastOrderDate);
 				printf("\nDoes this item need to be stored in a hazardous chemical store?");
 				printf("\n-> %d", temp->isHazardousChemical);
 				printf("\nDepartment: %d", temp->department);
@@ -632,6 +632,14 @@ void generateStats(struct node* top)
 
 void printToFile(struct node* top)
 {
+	float stockPercentage, size, count = 0;
+	int reOrderThresholdLimit = 1250;
+	char isHazardous[5];
+	char department[15];
+	char reOrderMonth[20];
+	char authority[20];
+	
+	size = (float)length(top);
 	FILE* fptr;
 	fptr = fopen("report.txt", "w");
 
@@ -639,13 +647,153 @@ void printToFile(struct node* top)
 
 	while (temp != NULL)
 	{
-		fprintf(fptr, "%d %s", temp->number, temp->name);
-		fprintf(fptr, "\n%s %ld", temp->supplierName, temp->supplierNumber);
-		fprintf(fptr, "\n%d %d %.2f", temp->thresholdLimit, temp->numOfUnits, temp->costPerUnit);
-		fprintf(fptr, "\n%d %d %d %d %d\n\n", temp->lastOrderDate, temp->isHazardousChemical,
-			temp->department, temp->reOrderMonth, temp->authority);
+		if (temp->isHazardousChemical == 1)
+		{
+			strcpy(isHazardous, "Yes");
+		}
+		else if (temp->isHazardousChemical == 2)
+		{
+			strcpy(isHazardous, "No");
+		}
+
+		if (temp->department == 1)
+		{
+			strcpy(department, "Office");
+		}
+		else if (temp->department == 2)
+		{
+			strcpy(department, "Maintenance");
+		}
+
+		if (temp->reOrderMonth == 1)
+		{
+			strcpy(reOrderMonth, "No Specified Month");
+		}
+		else if (temp->reOrderMonth == 2)
+		{
+			strcpy(reOrderMonth, "February");
+		}
+		else if (temp->reOrderMonth == 3)
+		{
+			strcpy(reOrderMonth, "August");
+		}
+
+		if (temp->authority == 1)
+		{
+			strcpy(authority, "Managing Director");
+		}
+		else if (temp->authority == 2)
+		{
+			strcpy(authority, "Financial Controller");
+		}
+		else if (temp->authority == 3)
+		{
+			strcpy(authority, "Departent Manager");
+		}
+
+		fprintf(fptr, "Stock Item Number: %d", temp->number);
+		fprintf(fptr, "\nStock Item Name: %s", temp->name);
+		fprintf(fptr, "\nStock Item Supplier Name: %s", temp->supplierName);
+		fprintf(fptr, "\nStock Item Supplier Contact Number: %d", temp->supplierNumber);
+		fprintf(fptr, "\nRe-order threshold limit: %d", temp->thresholdLimit);
+		fprintf(fptr, "\nNumber of Units: %d", temp->numOfUnits);
+		fprintf(fptr, "\nCost per Unit: %.2f", temp->costPerUnit);
+		fprintf(fptr, "\nLast Order Date(DDMMYYYY): %d", temp->lastOrderDate);
+		fprintf(fptr, "\nDoes this item need to be stored in a hazardous chemical store?");
+		fprintf(fptr, "\n-> %s", isHazardous);
+		fprintf(fptr, "\nDepartment: %s", department);
+		fprintf(fptr, "\nRe-order Month: %s", reOrderMonth);
+		fprintf(fptr, "\nAuthority: %s\n\n", authority);
 		temp = temp->NEXT;
 	}
-
+	while (temp != NULL)
+	{
+		if (temp->department == 1)
+		{
+			if (temp->thresholdLimit < reOrderThresholdLimit)
+			{
+				count++;
+			}
+		}
+		temp = temp->NEXT;
+	}
+	temp = top;
+	stockPercentage = (count / size) * 100;
+	fprintf(fptr, "\nThere are %.2f%% items below the re-order threshold limit in the Office Department\n", stockPercentage);
+	count = 0;
+	while (temp != NULL)
+	{
+		if (temp->department == 2)
+		{
+			if (temp->thresholdLimit < reOrderThresholdLimit)
+			{
+				count++;
+			}
+		}
+		temp = temp->NEXT;
+	}
+	temp = top;
+	stockPercentage = (count / size) * 100;
+	fprintf(fptr, "\nThere are %.2f%% items below the re-order threshold limit in the Maintenance Department\n", stockPercentage);
+	count = 0;
+	while (temp != NULL)
+	{
+		if (temp->department == 1)
+		{
+			if (temp->thresholdLimit < (reOrderThresholdLimit * 2))
+			{
+				count++;
+			}
+		}
+		temp = temp->NEXT;
+	}
+	temp = top;
+	stockPercentage = (count / size) * 100;
+	fprintf(fptr, "\nThere are %.2f%% items below twice the re-order threshold limit in the Office Department\n", stockPercentage);
+	count = 0;
+	while (temp != NULL)
+	{
+		if (temp->department == 2)
+		{
+			if (temp->thresholdLimit < (reOrderThresholdLimit * 2))
+			{
+				count++;
+			}
+		}
+		temp = temp->NEXT;
+	}
+	temp = top;
+	stockPercentage = (count / size) * 100;
+	fprintf(fptr, "\nThere are %.2f%% items below twice the re-order threshold limit in the Maintenance Department\n", stockPercentage);
+	count = 0;
+	while (temp != NULL)
+	{
+		if (temp->department == 1)
+		{
+			if (temp->thresholdLimit > (reOrderThresholdLimit * 2))
+			{
+				count++;
+			}
+		}
+		temp = temp->NEXT;
+	}
+	temp = top;
+	stockPercentage = (count / size) * 100;
+	fprintf(fptr, "\nThere are %.2f%% items above twice the re-order threshold limit in the Office Department\n", stockPercentage);
+	count = 0;
+	while (temp != NULL)
+	{
+		if (temp->department == 2)
+		{
+			if (temp->thresholdLimit > (reOrderThresholdLimit * 2))
+			{
+				count++;
+			}
+		}
+		temp = temp->NEXT;
+	}
+	stockPercentage = (count / size) * 100;
+	fprintf(fptr, "\nThere are %.2f%% items above twice the re-order threshold limit in the Maintenance Department\n", stockPercentage);
+	count = 0;
 	fclose(fptr);
 }
