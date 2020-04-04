@@ -14,7 +14,7 @@ void displayDatabase(struct node* top);
 void displayItem(struct node* top);
 void updateItem(struct node* top);
 void deleteItem(struct node* top, struct node** top2);
-void length(struct node* top);
+int length(struct node* top);
 void generateStats(struct node* top);
 
 void main()
@@ -469,7 +469,7 @@ void deleteItem(struct node* top, struct node** top2)
 	
 }
 
-void length(struct node* top)
+int length(struct node* top)
 {
 	struct node* temp;
 	temp = top;
@@ -479,11 +479,105 @@ void length(struct node* top)
 		i++;
 		temp = temp->NEXT;
 	}
-
-	printf("The length of the list is %d\n", i);
+	return i;
 }
 
 void generateStats(struct node* top)
 {
+	char option = ' ';
+	float stockPercentage, size, count = 0;
+	int department, reOrderThresholdLimit;
+	struct node* temp = top;
+	size = (float)length(top);
 
+	do {
+		printf("\nA. %% of stock items below the re-order threshold limit");
+		printf("\nB. %% of stock items below twice the re-order threshold limit");
+		printf("\nC. %% of stock items above twice the re-order threshold limit");
+		printf("\n=> ");
+		scanf("%c", &option);
+	} while (option != 'A' && option != 'B' && option != 'C');
+
+	if(option == 'A')
+	{
+		printf("\nPlease select a department");
+		printf("\n1. Office");
+		printf("\n2. Maintenance");
+		printf("\n=> ");
+		scanf("%d", &department);
+
+		printf("\nPlease enter the re-order threshold limit: ");
+		scanf("%d", &reOrderThresholdLimit);
+
+		if (department == 1)
+		{
+			while (temp != NULL)
+			{
+				if (temp->department == 1)
+				{
+					if (temp->thresholdLimit < reOrderThresholdLimit)
+					{
+						count++;
+					}
+				}
+				temp = temp->NEXT;
+			}
+			stockPercentage = (count / size) * 100;
+		}
+		else if (department == 2)
+		{
+			while (temp != NULL)
+			{
+				if (temp->department == 2)
+				{
+					if (temp->thresholdLimit < reOrderThresholdLimit)
+					{
+						count++;
+					}
+				}
+				temp = temp->NEXT;
+			}
+			stockPercentage = (count / size) * 100;
+		}
+		printf("\nThere are %.2f%% items below the re-order threshold limit\n", stockPercentage);
+	}
+	else if (option == 'B')
+	{
+		printf("\nPlease select a department");
+		printf("\n1. Office");
+		printf("\n2. Maintenance");
+		printf("\=> ");
+		scanf("%d", &department);
+
+		printf("Please enter the re-order threshold limit: ");
+		scanf("%d", &reOrderThresholdLimit);
+
+		if (department == 1)
+		{
+
+		}
+		else if (department == 2)
+		{
+
+		}
+	}
+	else if (option == 'C') {
+		printf("\nPlease select a department");
+		printf("\n1. Office");
+		printf("\n2. Maintenance");
+		printf("\=> ");
+		scanf("%d", &department);
+
+		printf("Please enter the re-order threshold limit: ");
+		scanf("%d", &reOrderThresholdLimit);
+
+		if (department == 1)
+		{
+
+		}
+		else if (department == 2)
+		{
+
+		}
+	}
 }
