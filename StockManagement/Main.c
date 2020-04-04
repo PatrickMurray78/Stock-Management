@@ -472,18 +472,15 @@ void deleteItem(struct node* top, struct node** top2)
 
 	if (temp->number == searchNum && temp->NEXT != NULL && count != 0)
 	{
-		printf("\n%d", count);
 		prevTemp->NEXT = temp->NEXT;
 		free(temp);
 		return;
 	}
-	if (temp->NEXT != NULL)
+	if (temp->NEXT == NULL && temp->number == searchNum)
 	{
-		temp = temp->NEXT;
-		if(temp->number == searchNum)
-		{
-			deleteItemAtEnd(top, prevTemp);
-		}
+		prevTemp->NEXT = NULL;
+		free(temp);
+		//deleteItemAtEnd(top, prevTemp);
 	}
 	else {
 		printf("\nStock Item not found");
