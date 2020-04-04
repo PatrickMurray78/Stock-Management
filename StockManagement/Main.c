@@ -15,8 +15,9 @@ void displayItem(struct node* top);
 void updateItem(struct node* top);
 void deleteItemAtStart(struct node** top);
 void deleteItemAtEnd(struct node* top, struct node* prev);
-void deleteItem(struct node* top);
+void deleteItem(struct node* top, struct node** top2);
 void length(struct node* top);
+void generateStats(struct node* top);
 
 void main()
 {
@@ -66,16 +67,13 @@ void main()
 				{
 					printf("Sorry the database is empty");
 				}
-				else if (headPtr->NEXT == NULL)
-				{
-					deleteItemAtStart(&headPtr);
-				}
 				else
 				{
-					deleteItem(headPtr);
+					deleteItem(headPtr, &headPtr);
 				}
 				break;
 			case 6:
+				generateStats(headPtr);
 				break;
 			case 7:
 				break;
@@ -434,22 +432,12 @@ void updateItem(struct node* top)
 
 void deleteItemAtStart(struct node** top)
 {
-	int searchNum, ret;
 	struct node* temp;
 
-	printf("\nPlease enter Stock Item Number to delete: ");
-	scanf("%d", &searchNum);
-	ret = strcmp(temp->name, searchNum);
-	if (ret == 0)
-	{
-		temp = *top;
-		*top = temp->NEXT;
+	temp = *top;
+	*top = temp->NEXT;
 
-		free(temp);
-	}
-	else {
-		printf("\nStock Item not found!");
-	}
+	free(temp);
 }
 
 void deleteItemAtEnd(struct node* top, struct node* prev)
@@ -461,9 +449,9 @@ void deleteItemAtEnd(struct node* top, struct node* prev)
 		free(temp);
 }
 
-void deleteItem(struct node* top)
+void deleteItem(struct node* top, struct node** top2)
 {
-	int searchNum;
+	int searchNum, count = 0;
 	struct node* temp = top;
 	struct node* prevTemp;
 	 
@@ -471,17 +459,36 @@ void deleteItem(struct node* top)
 	scanf("%d", &searchNum);
 	while (temp->NEXT != NULL && temp->number != searchNum)
 	{
+		count++;
 		prevTemp = temp;
 		temp = temp->NEXT;
 	}
-	if (temp->number && temp->NEXT != NULL)
+
+	if (count == 0)
 	{
+		deleteItemAtStart(top2);
+		return;
+	}
+
+	if (temp->number == searchNum && temp->NEXT != NULL && count != 0)
+	{
+		printf("\n%d", count);
 		prevTemp->NEXT = temp->NEXT;
 		free(temp);
 		return;
 	}
-	printf("\nStock Item not found!");
-	deleteItemAtEnd(top, prevTemp);
+	if (temp->NEXT != NULL)
+	{
+		temp = temp->NEXT;
+		if(temp->number == searchNum)
+		{
+			deleteItemAtEnd(top, prevTemp);
+		}
+	}
+	else {
+		printf("\nStock Item not found");
+	}
+	
 }
 
 void length(struct node* top)
@@ -496,4 +503,9 @@ void length(struct node* top)
 	}
 
 	printf("The length of the list is %d\n", i);
+}
+
+void generateStats(struct node* top)
+{
+
 }
