@@ -558,7 +558,7 @@ void generateStats(struct node* top)
 			{
 				if (temp->department == 1)
 				{
-					if ((temp->thresholdLimit * 2) < reOrderThresholdLimit)
+					if (temp->thresholdLimit < (reOrderThresholdLimit * 2))
 					{
 						count++;
 					}
@@ -573,7 +573,7 @@ void generateStats(struct node* top)
 			{
 				if (temp->department == 2)
 				{
-					if ((temp->thresholdLimit * 2) < reOrderThresholdLimit)
+					if (temp->thresholdLimit < (reOrderThresholdLimit * 2))
 					{
 						count++;
 					}
@@ -596,11 +596,35 @@ void generateStats(struct node* top)
 
 		if (department == 1)
 		{
-
+			while (temp != NULL)
+			{
+				if (temp->department == 1)
+				{
+					if (temp->thresholdLimit > (reOrderThresholdLimit * 2))
+					{
+						count++;
+					}
+				}
+				temp = temp->NEXT;
+			}
+			stockPercentage = (count / size) * 100;
 		}
 		else if (department == 2)
 		{
-
+			while (temp != NULL)
+			{
+				if (temp->department == 2)
+				{
+					if (temp->thresholdLimit > (reOrderThresholdLimit * 2))
+					{
+						count++;
+					}
+				}
+				temp = temp->NEXT;
+			}
+			stockPercentage = (count / size) * 100;
 		}
+		printf("\nThere are %.2f%% items above twice the re-order threshold limit\n", stockPercentage);
+
 	}
 }
