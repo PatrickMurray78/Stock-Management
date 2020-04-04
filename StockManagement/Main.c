@@ -13,8 +13,6 @@ void addItemAtEnd(struct node* top);
 void displayDatabase(struct node* top);
 void displayItem(struct node* top);
 void updateItem(struct node* top);
-void deleteItemAtStart(struct node** top);
-void deleteItemAtEnd(struct node* top, struct node* prev);
 void deleteItem(struct node* top, struct node** top2);
 void length(struct node* top);
 void generateStats(struct node* top);
@@ -430,25 +428,6 @@ void updateItem(struct node* top)
 	}
 }
 
-void deleteItemAtStart(struct node** top)
-{
-	struct node* temp;
-
-	temp = *top;
-	*top = temp->NEXT;
-
-	free(temp);
-}
-
-void deleteItemAtEnd(struct node* top, struct node* prev)
-{
-	struct node* temp = top;
-	struct node* prevTemp = prev;
-
-		prevTemp->NEXT = NULL;
-		free(temp);
-}
-
 void deleteItem(struct node* top, struct node** top2)
 {
 	int searchNum, count = 0;
@@ -466,7 +445,10 @@ void deleteItem(struct node* top, struct node** top2)
 
 	if (count == 0)
 	{
-		deleteItemAtStart(top2);
+		temp = *top2;
+		*top2 = temp->NEXT;
+
+		free(temp);
 		return;
 	}
 
@@ -480,7 +462,6 @@ void deleteItem(struct node* top, struct node** top2)
 	{
 		prevTemp->NEXT = NULL;
 		free(temp);
-		//deleteItemAtEnd(top, prevTemp);
 	}
 	else {
 		printf("\nStock Item not found");
