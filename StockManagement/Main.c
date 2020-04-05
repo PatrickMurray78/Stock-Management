@@ -5,6 +5,7 @@
 
 #include "Database.h"
 
+int login();
 void init(struct node** top);
 void addEnd(struct node* top);
 void saveDatabase(struct node* top);
@@ -23,6 +24,11 @@ void main()
 {
 	struct node* headPtr = NULL;
 	int mode;
+
+	do
+	{
+		login();
+	} while (login() == 0);
 
 	init(&headPtr);
 	addEnd(headPtr);
@@ -93,6 +99,12 @@ void main()
 	} while (mode != -1);
 	
 	_getch();
+}
+
+int login()
+{
+	int loginSuccess = 0;
+
 }
 
 void init(struct node** top)
