@@ -15,4 +15,9 @@ typedef struct node {
 	int authority;
 	struct node* PREV;
 	struct node* NEXT;
-}database;
+}Database;
+
+typedef struct {
+	char username[15];
+	char password[8];
+}Login;
