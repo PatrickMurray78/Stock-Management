@@ -7,19 +7,7 @@
 
 void initLogin();
 void login(Login credentials);
-void init(struct node** top);
-void addEnd(struct node* top);
-void saveDatabase(struct node* top);
-void addItemAtStart(struct node** top);
-void addItemAtEnd(struct node* top);
-void displayDatabase(struct node* top);
-void displayItem(struct node* top);
-void updateItem(struct node* top);
-void deleteItem(struct node* top, struct node** top2);
-int length(struct node* top);
-void generateStats(struct node* top);
-void printToFile(struct node* top);
-void stockInOrder(struct node* top);
+
 
 void main()
 {
@@ -177,7 +165,7 @@ void init(struct node** top)
 			}
 	}
 	fclose(fptr);
-}
+} 
 
 void addEnd(struct node* top)
 {
