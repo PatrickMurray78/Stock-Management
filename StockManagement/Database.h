@@ -37,8 +37,4 @@ void generateStats(struct node* top);
 void printToFile(struct node* top);
 void stockInOrder(struct node* top);
 
-typedef struct {
-	char username[15];
-	char password[8];
-}Login;
 #endif
