@@ -1,9 +1,5 @@
-#include<stdio.h>
-#include<conio.h>
-#include<string.h>
-#include<stdlib.h>
-
 #include "Database.h"
+#include "Login.h"
 
 
 void main()
@@ -16,10 +12,8 @@ void main()
 	init(&headPtr);
 	addEnd(headPtr);
 	
-
-	do
-	{
-		printf("\n1. Add Stock Item");
+	do {
+		printf("\n\n1. Add Stock Item");
 		printf("\n2. Display All Stock Items");
 		printf("\n3. Display Stock Item");
 		printf("\n4. Update Stock Item");
@@ -30,15 +24,12 @@ void main()
 		printf("\nPlease enter mode: ");
 		scanf("%d", &mode);
 
-		switch (mode)
-		{
+		switch (mode) {
 			case 1:
-				if (headPtr == NULL)
-				{
+				if (headPtr == NULL) {
 					addItemAtStart(&headPtr);
-				}
-				else
-				{
+				} 
+				else {
 					addItemAtEnd(headPtr);
 				}
 				break;
@@ -52,12 +43,10 @@ void main()
 				updateItem(headPtr);
 				break;
 			case 5:
-				if (headPtr == NULL)
-				{
+				if (headPtr == NULL) {
 					printf("Sorry the database is empty");
 				}
-				else
-				{
+				else {
 					deleteItem(headPtr, &headPtr);
 				}
 				break;
@@ -80,6 +69,4 @@ void main()
 		}
 
 	} while (mode != -1);
-	
-	_getch();
 }
