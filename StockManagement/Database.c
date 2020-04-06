@@ -34,8 +34,7 @@ void fillDatabase(struct node* top)
 
 	struct node* temp = top;
 
-	while (!feof(fptr))
-	{
+	while (!feof(fptr)) {
 		struct node* newNode = (struct node*)malloc(sizeof(struct node));
 		numInputs = fscanf(fptr, "%d %s", &newNode->number, &newNode->name);
 		numInputs += fscanf(fptr, "%s %ld", newNode->supplierName, &newNode->supplierNumber);
@@ -43,15 +42,12 @@ void fillDatabase(struct node* top)
 		numInputs += fscanf(fptr, "%s %d %d %d %d", newNode->lastOrderDate, &newNode->isHazardousChemical,
 			&newNode->department, &newNode->reOrderMonth, &newNode->authority);
 
-		if (numInputs == 12 && count != 0)
-		{
-			while (temp->NEXT != NULL)
-			{
+		if (numInputs == 12 && count != 0) {
+			while (temp->NEXT != NULL) {
 				temp = temp->NEXT;
 			}
 
-			if (temp->NEXT == NULL)
-			{
+			if (temp->NEXT == NULL) {
 				newNode->NEXT = NULL;
 				temp->NEXT = newNode;
 			}
