@@ -8,21 +8,17 @@ void init(struct node** top)
 
 	struct node* newNode = (struct node*)malloc(sizeof(struct node));
 
-	if (fptr == NULL)
-	{
+	if (fptr == NULL) {
 		printf("\nSorry the file could not be opened");
 	}
-	else
-	{
+	else {
 		numInputs = fscanf(fptr, "%d %s", &newNode->number, &newNode->name);
 		numInputs += fscanf(fptr, "%s %ld", newNode->supplierName, &newNode->supplierNumber);
 		numInputs += fscanf(fptr, "%d %d %f", &newNode->thresholdLimit, &newNode->numOfUnits, &newNode->costPerUnit);
 		numInputs += fscanf(fptr, "%s %d %d %d %d", newNode->lastOrderDate, &newNode->isHazardousChemical,
 			&newNode->department, &newNode->reOrderMonth, &newNode->authority);
 
-
-		if (numInputs == 12)
-		{
+		if (numInputs == 12) {
 			newNode->NEXT = *top;
 			*top = newNode;
 		}
@@ -189,10 +185,58 @@ void addItemAtEnd(struct node* top)
 
 void displayDatabase(struct node* top)
 {
+	char isHazardous[5];
+	char department[15];
+	char reOrderMonth[20];
+	char authority[20];
 	struct node* temp = top;
 
 	while (temp != NULL)
 	{
+		if (temp->isHazardousChemical == 1)
+		{
+			strcpy(isHazardous, "Yes");
+		}
+		else if (temp->isHazardousChemical == 2)
+		{
+			strcpy(isHazardous, "No");
+		}
+
+		if (temp->department == 1)
+		{
+			strcpy(department, "Office");
+		}
+		else if (temp->department == 2)
+		{
+			strcpy(department, "Maintenance");
+		}
+
+		if (temp->reOrderMonth == 1)
+		{
+			strcpy(reOrderMonth, "No Specified Month");
+		}
+		else if (temp->reOrderMonth == 2)
+		{
+			strcpy(reOrderMonth, "February");
+		}
+		else if (temp->reOrderMonth == 3)
+		{
+			strcpy(reOrderMonth, "August");
+		}
+
+		if (temp->authority == 1)
+		{
+			strcpy(authority, "Managing Director");
+		}
+		else if (temp->authority == 2)
+		{
+			strcpy(authority, "Financial Controller");
+		}
+		else if (temp->authority == 3)
+		{
+			strcpy(authority, "Departent Manager");
+		}
+
 		printf("\nStock Item Number: %d", temp->number);
 		printf("\nStock Item Name: %s", temp->name);
 		printf("\nStock Item Supplier Name: %s", temp->supplierName);
@@ -202,20 +246,24 @@ void displayDatabase(struct node* top)
 		printf("\nCost per Unit: %f", temp->costPerUnit);
 		printf("\nLast Order Date(DDMMYYYY): %s", temp->lastOrderDate);
 		printf("\nDoes this item need to be stored in a hazardous chemical store?");
-		printf("\n-> %d", temp->isHazardousChemical);
-		printf("\nDepartment: %d", temp->department);
-		printf("\nRe-order Month: %d", temp->reOrderMonth);
-		printf("\nAuthority: %d\n", temp->authority);
+		printf("\n-> %s", isHazardous);
+		printf("\nDepartment: %s", department);
+		printf("\nRe-order Month: %s", reOrderMonth);
+		printf("\nAuthority: %s\n", authority);
 		temp = temp->NEXT;
 	}
 }
 
 void displayItem(struct node* top)
 {
-	struct node* temp;
-	int option, searchNum, ret, count = 0;
 	char searchName[30];
-
+	char isHazardous[5];
+	char department[15];
+	char reOrderMonth[20];
+	char authority[20];
+	int option, searchNum, ret, count = 0;
+	struct node* temp;
+	
 	temp = top;
 
 	printf("\nWould you like to search by:");
@@ -232,6 +280,50 @@ void displayItem(struct node* top)
 		{
 			if (temp->number == searchNum)
 			{
+				if (temp->isHazardousChemical == 1)
+				{
+					strcpy(isHazardous, "Yes");
+				}
+				else if (temp->isHazardousChemical == 2)
+				{
+					strcpy(isHazardous, "No");
+				}
+
+				if (temp->department == 1)
+				{
+					strcpy(department, "Office");
+				}
+				else if (temp->department == 2)
+				{
+					strcpy(department, "Maintenance");
+				}
+
+				if (temp->reOrderMonth == 1)
+				{
+					strcpy(reOrderMonth, "No Specified Month");
+				}
+				else if (temp->reOrderMonth == 2)
+				{
+					strcpy(reOrderMonth, "February");
+				}
+				else if (temp->reOrderMonth == 3)
+				{
+					strcpy(reOrderMonth, "August");
+				}
+
+				if (temp->authority == 1)
+				{
+					strcpy(authority, "Managing Director");
+				}
+				else if (temp->authority == 2)
+				{
+					strcpy(authority, "Financial Controller");
+				}
+				else if (temp->authority == 3)
+				{
+					strcpy(authority, "Departent Manager");
+				}
+
 				printf("\nStock Item Number: %d", temp->number);
 				printf("\nStock Item Name: %s", temp->name);
 				printf("\nStock Item Supplier Name: %s", temp->supplierName);
@@ -241,10 +333,10 @@ void displayItem(struct node* top)
 				printf("\nCost per Unit: %f", temp->costPerUnit);
 				printf("\nLast Order Date(DDMMYYYY): %s", temp->lastOrderDate);
 				printf("\nDoes this item need to be stored in a hazardous chemical store?");
-				printf("\n-> %d", temp->isHazardousChemical);
-				printf("\nDepartment: %d", temp->department);
-				printf("\nRe-order Month: %d", temp->reOrderMonth);
-				printf("\nAuthority: %d\n", temp->authority);
+				printf("\n-> %s", isHazardous);
+				printf("\nDepartment: %s", department);
+				printf("\nRe-order Month: %s", reOrderMonth);
+				printf("\nAuthority: %s\n", authority);
 			}
 
 			temp = temp->NEXT;
@@ -616,7 +708,7 @@ void printToFile(struct node* top)
 	}
 	temp = top;
 	stockPercentage = (count / size) * 100;
-	fprintf(fptr, "\nThere are %.2f%% items below the re-order threshold limit in the Office Department\n", stockPercentage);
+	fprintf(fptr, "\nThere are %.2f%% items below the re-order threshold limit in the Office Department", stockPercentage);
 	count = 0;
 	while (temp != NULL)
 	{
@@ -631,7 +723,7 @@ void printToFile(struct node* top)
 	}
 	temp = top;
 	stockPercentage = (count / size) * 100;
-	fprintf(fptr, "\nThere are %.2f%% items below the re-order threshold limit in the Maintenance Department\n", stockPercentage);
+	fprintf(fptr, "\nThere are %.2f%% items below the re-order threshold limit in the Maintenance Department", stockPercentage);
 	count = 0;
 	while (temp != NULL)
 	{
@@ -646,7 +738,7 @@ void printToFile(struct node* top)
 	}
 	temp = top;
 	stockPercentage = (count / size) * 100;
-	fprintf(fptr, "\nThere are %.2f%% items below twice the re-order threshold limit in the Office Department\n", stockPercentage);
+	fprintf(fptr, "\nThere are %.2f%% items below twice the re-order threshold limit in the Office Department", stockPercentage);
 	count = 0;
 	while (temp != NULL)
 	{
@@ -661,7 +753,7 @@ void printToFile(struct node* top)
 	}
 	temp = top;
 	stockPercentage = (count / size) * 100;
-	fprintf(fptr, "\nThere are %.2f%% items below twice the re-order threshold limit in the Maintenance Department\n", stockPercentage);
+	fprintf(fptr, "\nThere are %.2f%% items below twice the re-order threshold limit in the Maintenance Department", stockPercentage);
 	count = 0;
 	while (temp != NULL)
 	{
@@ -676,7 +768,7 @@ void printToFile(struct node* top)
 	}
 	temp = top;
 	stockPercentage = (count / size) * 100;
-	fprintf(fptr, "\nThere are %.2f%% items above twice the re-order threshold limit in the Office Department\n", stockPercentage);
+	fprintf(fptr, "\nThere are %.2f%% items above twice the re-order threshold limit in the Office Department", stockPercentage);
 	count = 0;
 	while (temp != NULL)
 	{
@@ -690,7 +782,7 @@ void printToFile(struct node* top)
 		temp = temp->NEXT;
 	}
 	stockPercentage = (count / size) * 100;
-	fprintf(fptr, "\nThere are %.2f%% items above twice the re-order threshold limit in the Maintenance Department\n", stockPercentage);
+	fprintf(fptr, "\nThere are %.2f%% items above twice the re-order threshold limit in the Maintenance Department", stockPercentage);
 	count = 0;
 	fclose(fptr);
 }
