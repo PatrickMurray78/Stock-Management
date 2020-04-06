@@ -26,7 +26,7 @@ void init(struct node** top)
 	fclose(fptr);
 }
 
-void addEnd(struct node* top)
+void fillDatabase(struct node* top)
 {
 	int numInputs, count = 0;
 	FILE* fptr;

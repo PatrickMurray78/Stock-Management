@@ -16,7 +16,7 @@ void main()
 	
 }
 
-void showMenu(struct node* top, struct node* top2)
+void showMenu(struct node* top, struct node** top2)
 {
 	int mode;
 
@@ -76,4 +76,5 @@ void showMenu(struct node* top, struct node* top2)
 			break;
 		}
 	} while (mode != -1);
+	getch();
 }

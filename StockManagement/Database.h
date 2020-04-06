@@ -24,7 +24,7 @@ typedef struct node {
 }Database;
 
 void init(struct node** top);
-void addEnd(struct node* top);
+void fillDatabase(struct node* top);
 void saveDatabase(struct node* top);
 void addItemAtStart(struct node** top);
 void addItemAtEnd(struct node* top);
