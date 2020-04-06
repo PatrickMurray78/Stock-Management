@@ -703,6 +703,7 @@ void stockInOrder(struct node* top)
 	float highest, newHighest, value;
 	struct node* temp = top;
 	highest = (float)temp->numOfUnits * temp->costPerUnit;
+	newHighest = highest;
 	highestStockNum = temp->number;
 	for (int i = 0; i < length(top); i++)
 	{
