@@ -1,6 +1,11 @@
 #ifndef LINKEDLIST
 #define LINKEDLIST
 
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+#include<stdlib.h>
+
 typedef struct node {
 	int number;
 	char name[20];
