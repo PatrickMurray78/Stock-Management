@@ -6,4 +6,7 @@ typedef struct {
 	char password[8];
 }Login;
 
+void initLogin();
+void login(Login credentials);
+
 #endif
