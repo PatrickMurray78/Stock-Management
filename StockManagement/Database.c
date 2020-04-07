@@ -237,39 +237,7 @@ void displayDatabase(struct node* top)
 	struct node* temp = top;
 
 	while (temp != NULL) {
-		if (temp->isHazardousChemical == 1) {
-			strcpy(isHazardous, "Yes");
-		}
-		else if (temp->isHazardousChemical == 2) {
-			strcpy(isHazardous, "No");
-		}
-
-		if (temp->department == 1) {
-			strcpy(department, "Office");
-		}
-		else if (temp->department == 2) {
-			strcpy(department, "Maintenance");
-		}
-
-		if (temp->reOrderMonth == 1) {
-			strcpy(reOrderMonth, "No Specified Month");
-		}
-		else if (temp->reOrderMonth == 2) {
-			strcpy(reOrderMonth, "February");
-		}
-		else if (temp->reOrderMonth == 3) {
-			strcpy(reOrderMonth, "August");
-		}
-
-		if (temp->authority == 1) {
-			strcpy(authority, "Managing Director");
-		}
-		else if (temp->authority == 2) {
-			strcpy(authority, "Financial Controller");
-		}
-		else if (temp->authority == 3) {
-			strcpy(authority, "Departent Manager");
-		}
+		createStrings(temp, isHazardous, department, reOrderMonth, authority);
 
 		printf("\nStock Item Number: %d", temp->number);
 		printf("\nStock Item Name: %s", temp->name);
@@ -312,39 +280,7 @@ void displayItem(struct node* top)
 		scanf("%d", &searchNum);
 		while (temp != NULL) {
 			if (temp->number == searchNum) {
-				if (temp->isHazardousChemical == 1) {
-					strcpy(isHazardous, "Yes");
-				}
-				else if (temp->isHazardousChemical == 2) {
-					strcpy(isHazardous, "No");
-				}
-
-				if (temp->department == 1) {
-					strcpy(department, "Office");
-				}
-				else if (temp->department == 2) {
-					strcpy(department, "Maintenance");
-				}
-
-				if (temp->reOrderMonth == 1) {
-					strcpy(reOrderMonth, "No Specified Month");
-				}
-				else if (temp->reOrderMonth == 2) {
-					strcpy(reOrderMonth, "February");
-				}
-				else if (temp->reOrderMonth == 3) {
-					strcpy(reOrderMonth, "August");
-				}
-
-				if (temp->authority == 1) {
-					strcpy(authority, "Managing Director");
-				}
-				else if (temp->authority == 2) {
-					strcpy(authority, "Financial Controller");
-				}
-				else if (temp->authority == 3) {
-					strcpy(authority, "Departent Manager");
-				}
+				createStrings(temp, isHazardous, department, reOrderMonth, authority);
 
 				printf("\nStock Item Number: %d", temp->number);
 				printf("\nStock Item Name: %s", temp->name);
@@ -372,39 +308,7 @@ void displayItem(struct node* top)
 		while (temp != NULL) {
 			ret = strcmp(temp->name, searchName);
 			if (ret == 0) {
-				if (temp->isHazardousChemical == 1) {
-					strcpy(isHazardous, "Yes");
-				}
-				else if (temp->isHazardousChemical == 2) {
-					strcpy(isHazardous, "No");
-				}
-
-				if (temp->department == 1) {
-					strcpy(department, "Office");
-				}
-				else if (temp->department == 2) {
-					strcpy(department, "Maintenance");
-				}
-
-				if (temp->reOrderMonth == 1) {
-					strcpy(reOrderMonth, "No Specified Month");
-				}
-				else if (temp->reOrderMonth == 2) {
-					strcpy(reOrderMonth, "February");
-				}
-				else if (temp->reOrderMonth == 3) {
-					strcpy(reOrderMonth, "August");
-				}
-
-				if (temp->authority == 1) {
-					strcpy(authority, "Managing Director");
-				}
-				else if (temp->authority == 2) {
-					strcpy(authority, "Financial Controller");
-				}
-				else if (temp->authority == 3) {
-					strcpy(authority, "Departent Manager");
-				}
+				createStrings(temp, isHazardous, department, reOrderMonth, authority);
 
 				printf("\nStock Item Number: %d", temp->number);
 				printf("\nStock Item Name: %s", temp->name);
@@ -546,15 +450,15 @@ void generateStats(struct node* top)
 		scanf(" %c", &option);
 	} while (option != 'A' && option != 'B' && option != 'C');
 
-	if (option == 'A') {
-		do {
-			printf("\nPlease select a department");
-			printf("\n1. Office");
-			printf("\n2. Maintenance");
-			printf("\n=> ");
-			scanf("%d", &department);
-		} while (department != 1 && department != 2);
+	do {
+		printf("\nPlease select a department");
+		printf("\n1. Office");
+		printf("\n2. Maintenance");
+		printf("\n=> ");
+		scanf("%d", &department);
+	} while (department != 1 && department != 2);
 
+	if (option == 'A') {
 		if (department == 1) {
 			while (temp != NULL) {
 				if (temp->department == 1) {
@@ -580,14 +484,6 @@ void generateStats(struct node* top)
 		printf("\nThere are %.2f%% items below the re-order threshold limit\n", stockPercentage);
 	}
 	else if (option == 'B') {
-		do {
-			printf("\nPlease select a department");
-			printf("\n1. Office");
-			printf("\n2. Maintenance");
-			printf("\n=> ");
-			scanf("%d", &department);
-		} while (department != 1 && department != 2);
-
 		if (department == 1) {
 			while (temp != NULL) {
 				if (temp->department == 1) {
@@ -613,14 +509,6 @@ void generateStats(struct node* top)
 		printf("\nThere are %.2f%% items below twice the re-order threshold limit\n", stockPercentage);
 	}
 	else if (option == 'C') {
-		do {
-			printf("\nPlease select a department");
-			printf("\n1. Office");
-			printf("\n2. Maintenance");
-			printf("\n=> ");
-			scanf("%d", &department);
-		} while (department != 1 && department != 2);
-
 		if (department == 1) {
 			while (temp != NULL) {
 				if (temp->department == 1) {
@@ -662,39 +550,7 @@ void printToFile(struct node* top)
 	struct node* temp = top;
 
 	while (temp != NULL) {
-		if (temp->isHazardousChemical == 1) {
-			strcpy(isHazardous, "Yes");
-		}
-		else if (temp->isHazardousChemical == 2) {
-			strcpy(isHazardous, "No");
-		}
-
-		if (temp->department == 1) {
-			strcpy(department, "Office");
-		}
-		else if (temp->department == 2) {
-			strcpy(department, "Maintenance");
-		}
-
-		if (temp->reOrderMonth == 1) {
-			strcpy(reOrderMonth, "No Specified Month");
-		}
-		else if (temp->reOrderMonth == 2) {
-			strcpy(reOrderMonth, "February");
-		}
-		else if (temp->reOrderMonth == 3) {
-			strcpy(reOrderMonth, "August");
-		}
-
-		if (temp->authority == 1) {
-			strcpy(authority, "Managing Director");
-		}
-		else if (temp->authority == 2) {
-			strcpy(authority, "Financial Controller");
-		}
-		else if (temp->authority == 3) {
-			strcpy(authority, "Departent Manager");
-		}
+		createStrings(temp, isHazardous, department, reOrderMonth, authority);
 
 		fprintf(fptr, "Stock Item Number: %d", temp->number);
 		fprintf(fptr, "\nStock Item Name: %s", temp->name);
@@ -825,4 +681,42 @@ void stockInOrder(struct node* top)
 		temp = top;
 	}
 	printf("\n");
+}
+
+char createStrings(struct node* temp, char isHazardous[5], char department[15], char reOrderMonth[20], char authority[20])
+{
+	if (temp->isHazardousChemical == 1) {
+		strcpy(isHazardous, "Yes");
+	}
+	else if (temp->isHazardousChemical == 2) {
+		strcpy(isHazardous, "No");
+	}
+
+	if (temp->department == 1) {
+		strcpy(department, "Office");
+	}
+	else if (temp->department == 2) {
+		strcpy(department, "Maintenance");
+	}
+
+	if (temp->reOrderMonth == 1) {
+		strcpy(reOrderMonth, "No Specified Month");
+	}
+	else if (temp->reOrderMonth == 2) {
+		strcpy(reOrderMonth, "February");
+	}
+	else if (temp->reOrderMonth == 3) {
+		strcpy(reOrderMonth, "August");
+	}
+
+	if (temp->authority == 1) {
+		strcpy(authority, "Managing Director");
+	}
+	else if (temp->authority == 2) {
+		strcpy(authority, "Financial Controller");
+	}
+	else if (temp->authority == 3) {
+		strcpy(authority, "Departent Manager");
+	}
+	return isHazardous, department, reOrderMonth, authority;
 }
