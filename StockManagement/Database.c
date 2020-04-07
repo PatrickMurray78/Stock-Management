@@ -485,17 +485,17 @@ void deleteItem(struct node* top, struct node** top2)
 	struct node* temp = top;
 	struct node* prevTemp;
 
-	printf("\nPlease enter Stock Item Number to delete: ");
-	scanf("%d", &searchNum);
-	while (temp->NEXT != NULL && temp->number != searchNum)
-	{
+	do {
+		printf("\nPlease enter Stock Item Number to delete: ");
+		scanf("%d", &searchNum);
+	} while (searchNum < 0);
+	while (temp->NEXT != NULL && temp->number != searchNum) {
 		count++;
 		prevTemp = temp;
 		temp = temp->NEXT;
 	}
 
-	if (count == 0)
-	{
+	if (count == 0) {
 		temp = *top2;
 		*top2 = temp->NEXT;
 
@@ -503,30 +503,27 @@ void deleteItem(struct node* top, struct node** top2)
 		return;
 	}
 
-	if (temp->number == searchNum && temp->NEXT != NULL && count != 0)
-	{
+	if (temp->number == searchNum && temp->NEXT != NULL && count != 0) {
 		prevTemp->NEXT = temp->NEXT;
 		free(temp);
 		return;
 	}
-	if (temp->NEXT == NULL && temp->number == searchNum)
-	{
+
+	if (temp->NEXT == NULL && temp->number == searchNum) {
 		prevTemp->NEXT = NULL;
 		free(temp);
 	}
 	else {
-		printf("\nStock Item not found");
+		printf("\nStock Item %d not found", searchNum);
 	}
-
 }
 
 int length(struct node* top)
 {
-	struct node* temp;
-	temp = top;
 	int i = 0;
-	while (temp != NULL)
-	{
+	struct node* temp = top;
+	
+	while (temp != NULL) {
 		i++;
 		temp = temp->NEXT;
 	}
