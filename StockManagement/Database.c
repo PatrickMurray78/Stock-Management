@@ -364,8 +364,6 @@ void displayItem(struct node* top)
 			temp = temp->NEXT;
 		}
 		printf("\nStock Item number %d not in our database!", searchNum);
-		return;
-
 	}
 	else {
 		printf("\nPlease enter the Stock Item Name");
@@ -426,64 +424,58 @@ void displayItem(struct node* top)
 			temp = temp->NEXT;
 		}
 		printf("\nStock Item name %s not in our database!", searchName);
-		return;
 	}
 }
 
 void updateItem(struct node* top)
 {
-	struct node* temp;
-	int option, searchNum, ret;
+	int option, searchNum, ret, i = 0;
 	char searchName[30];
-	int i = 0;
+	struct node* temp = top;
 
-	temp = top;
-
-	printf("\nWould you like to search by:");
-	printf("\n1. Stock Item Number");
-	printf("\n2. Stock Item Name");
-	printf("\n=> ");
-	scanf("%d", &option);
-	if (option == 1)
-	{
+	do {
+		printf("\nWould you like to search by:");
+		printf("\n1. Stock Item Number");
+		printf("\n2. Stock Item Name");
+		printf("\n=> ");
+		scanf("%d", &option);
+	} while (option != 1 && option != 2);
+	if (option == 1) {
 		printf("\nPlease enter the Stock Item Number");
 		printf("\n=> ");
 		scanf("%d", &searchNum);
-		while (temp != NULL)
-		{
-			if (temp->number == searchNum)
-			{
+		while (temp != NULL) {
+			if (temp->number == searchNum) {
 				printf("\nNew Stock Item Supplier Name: ");
 				scanf("%s", temp->supplierName);
 				printf("New Stock Item Supplier Contact Number: ");
 				scanf("%ld", &temp->supplierNumber);
 				printf("New Re-order threshold limit: ");
 				scanf("%d", &temp->thresholdLimit);
+				return;
 			}
-
 			temp = temp->NEXT;
 		}
-
+		printf("\nStock Item number %d not in our database!", searchNum);
 	}
 	else {
 		printf("\nPlease enter the Stock Item Name");
 		printf("\n=> ");
 		scanf("%s", searchName);
-		while (temp != NULL)
-		{
+		while (temp != NULL) {
 			ret = strcmp(temp->name, searchName);
-			if (ret == 0)
-			{
+			if (ret == 0) {
 				printf("\nNew Stock Item Supplier Name: ");
 				scanf("%s", temp->supplierName);
 				printf("New Stock Item Supplier Contact Number: ");
 				scanf("%ld", &temp->supplierNumber);
 				printf("New Re-order threshold limit: ");
 				scanf("%d", &temp->thresholdLimit);
+				return;
 			}
-
 			temp = temp->NEXT;
 		}
+		printf("\nStock Item number %d not in our database!", searchNum);
 	}
 }
 
