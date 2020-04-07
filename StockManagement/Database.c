@@ -143,7 +143,7 @@ void addItemAtStart(struct node** top)
 
 void addItemAtEnd(struct node* top)
 {
-	int stockNum, unique = 0;
+	int stockNum;
 	struct node* temp = top;
 	struct node* newNode = (struct node*)malloc(sizeof(struct node));
 
@@ -152,8 +152,7 @@ void addItemAtEnd(struct node* top)
 		printf("\nStock Item Number: ");
 		scanf("%d", &newNode->number);
 		stockNum = newNode->number;
-		unique = isUnique(stockNum, temp);
-	} while (newNode->number < 0 || unique == 0);
+	} while (newNode->number < 0 || isUnique(stockNum, temp) == 0);
 	printf("Stock Item Name: ");
 	scanf("%s", newNode->name);
 	printf("Stock Item Supplier Name: ");
@@ -219,9 +218,9 @@ int isUnique(int stockNum, struct node* top)
 {
 	int num = stockNum;
 	struct node* temp = top;
-	printf("\n%d", stockNum);
 	while (temp != NULL) {
 		if (stockNum == temp->number) {
+			printf("\nStock Number is not unique, please try again");
 			return 0;
 		}
 		temp = temp->NEXT;
