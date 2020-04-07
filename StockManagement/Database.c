@@ -151,10 +151,9 @@ void addItemAtEnd(struct node* top)
 	do {
 		printf("\nStock Item Number: ");
 		scanf("%d", &newNode->number);
-
 		stockNum = newNode->number;
 		unique = isUnique(stockNum, temp);
-	} while (newNode->number < 0 && isUnique == 0);
+	} while (newNode->number < 0 || unique == 0);
 	printf("Stock Item Name: ");
 	scanf("%s", newNode->name);
 	printf("Stock Item Supplier Name: ");
@@ -208,8 +207,7 @@ void addItemAtEnd(struct node* top)
 		scanf("%d", &newNode->authority);
 	} while (newNode->authority < 1 || newNode->authority > 3);
 
-	while (temp->NEXT != NULL)
-	{
+	while (temp->NEXT != NULL) {
 		temp = temp->NEXT;
 	}
 
@@ -219,18 +217,16 @@ void addItemAtEnd(struct node* top)
 
 int isUnique(int stockNum, struct node* top)
 {
-	int isUnique = 0;
-	int stockNum = stockNum;
+	int num = stockNum;
 	struct node* temp = top;
-
-	while (temp->NEXT != NULL) {
+	printf("\n%d", stockNum);
+	while (temp != NULL) {
 		if (stockNum == temp->number) {
-			isUnique = 0;
-			break;
+			return 0;
 		}
 		temp = temp->NEXT;
 	}
-	return isUnique;
+	return 1;
 }
 
 void displayDatabase(struct node* top)
