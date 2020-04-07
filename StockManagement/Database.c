@@ -64,8 +64,7 @@ void saveDatabase(struct node* top)
 
 	struct node* temp = top;
 
-	while (temp != NULL)
-	{
+	while (temp != NULL) {
 		fprintf(fptr, "%d %s", temp->number, temp->name);
 		fprintf(fptr, "\n%s %ld", temp->supplierName, temp->supplierNumber);
 		fprintf(fptr, "\n%d %d %.2f", temp->thresholdLimit, temp->numOfUnits, temp->costPerUnit);
@@ -73,7 +72,6 @@ void saveDatabase(struct node* top)
 			temp->department, temp->reOrderMonth, temp->authority);
 		temp = temp->NEXT;
 	}
-
 	fclose(fptr);
 }
 
