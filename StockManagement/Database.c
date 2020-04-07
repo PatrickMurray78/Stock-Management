@@ -661,49 +661,38 @@ void printToFile(struct node* top)
 
 	struct node* temp = top;
 
-	while (temp != NULL)
-	{
-		if (temp->isHazardousChemical == 1)
-		{
+	while (temp != NULL) {
+		if (temp->isHazardousChemical == 1) {
 			strcpy(isHazardous, "Yes");
 		}
-		else if (temp->isHazardousChemical == 2)
-		{
+		else if (temp->isHazardousChemical == 2) {
 			strcpy(isHazardous, "No");
 		}
 
-		if (temp->department == 1)
-		{
+		if (temp->department == 1) {
 			strcpy(department, "Office");
 		}
-		else if (temp->department == 2)
-		{
+		else if (temp->department == 2) {
 			strcpy(department, "Maintenance");
 		}
 
-		if (temp->reOrderMonth == 1)
-		{
+		if (temp->reOrderMonth == 1) {
 			strcpy(reOrderMonth, "No Specified Month");
 		}
-		else if (temp->reOrderMonth == 2)
-		{
+		else if (temp->reOrderMonth == 2) {
 			strcpy(reOrderMonth, "February");
 		}
-		else if (temp->reOrderMonth == 3)
-		{
+		else if (temp->reOrderMonth == 3) {
 			strcpy(reOrderMonth, "August");
 		}
 
-		if (temp->authority == 1)
-		{
+		if (temp->authority == 1) {
 			strcpy(authority, "Managing Director");
 		}
-		else if (temp->authority == 2)
-		{
+		else if (temp->authority == 2) {
 			strcpy(authority, "Financial Controller");
 		}
-		else if (temp->authority == 3)
-		{
+		else if (temp->authority == 3) {
 			strcpy(authority, "Departent Manager");
 		}
 
@@ -722,12 +711,9 @@ void printToFile(struct node* top)
 		fprintf(fptr, "\nAuthority: %s\n\n", authority);
 		temp = temp->NEXT;
 	}
-	while (temp != NULL)
-	{
-		if (temp->department == 1)
-		{
-			if (temp->numOfUnits < temp->thresholdLimit)
-			{
+	while (temp != NULL) {
+		if (temp->department == 1) {
+			if (temp->numOfUnits < temp->thresholdLimit) {
 				count++;
 			}
 		}
@@ -737,12 +723,9 @@ void printToFile(struct node* top)
 	stockPercentage = (count / size) * 100;
 	fprintf(fptr, "\nThere are %.2f%% items below the re-order threshold limit in the Office Department", stockPercentage);
 	count = 0;
-	while (temp != NULL)
-	{
-		if (temp->department == 2)
-		{
-			if (temp->numOfUnits < temp->thresholdLimit)
-			{
+	while (temp != NULL) {
+		if (temp->department == 2) {
+			if (temp->numOfUnits < temp->thresholdLimit) {
 				count++;
 			}
 		}
@@ -752,12 +735,9 @@ void printToFile(struct node* top)
 	stockPercentage = (count / size) * 100;
 	fprintf(fptr, "\nThere are %.2f%% items below the re-order threshold limit in the Maintenance Department", stockPercentage);
 	count = 0;
-	while (temp != NULL)
-	{
-		if (temp->department == 1)
-		{
-			if (temp->numOfUnits < (temp->thresholdLimit * 2))
-			{
+	while (temp != NULL) {
+		if (temp->department == 1) {
+			if (temp->numOfUnits < (temp->thresholdLimit * 2)) {
 				count++;
 			}
 		}
@@ -767,12 +747,9 @@ void printToFile(struct node* top)
 	stockPercentage = (count / size) * 100;
 	fprintf(fptr, "\nThere are %.2f%% items below twice the re-order threshold limit in the Office Department", stockPercentage);
 	count = 0;
-	while (temp != NULL)
-	{
-		if (temp->department == 2)
-		{
-			if (temp->numOfUnits < (temp->thresholdLimit * 2))
-			{
+	while (temp != NULL) {
+		if (temp->department == 2) {
+			if (temp->numOfUnits < (temp->thresholdLimit * 2)) {
 				count++;
 			}
 		}
@@ -782,12 +759,9 @@ void printToFile(struct node* top)
 	stockPercentage = (count / size) * 100;
 	fprintf(fptr, "\nThere are %.2f%% items below twice the re-order threshold limit in the Maintenance Department", stockPercentage);
 	count = 0;
-	while (temp != NULL)
-	{
-		if (temp->department == 1)
-		{
-			if (temp->numOfUnits > (temp->thresholdLimit * 2))
-			{
+	while (temp != NULL) {
+		if (temp->department == 1) {
+			if (temp->numOfUnits > (temp->thresholdLimit * 2)) {
 				count++;
 			}
 		}
@@ -797,12 +771,9 @@ void printToFile(struct node* top)
 	stockPercentage = (count / size) * 100;
 	fprintf(fptr, "\nThere are %.2f%% items above twice the re-order threshold limit in the Office Department", stockPercentage);
 	count = 0;
-	while (temp != NULL)
-	{
-		if (temp->department == 2)
-		{
-			if (temp->numOfUnits > (temp->thresholdLimit * 2))
-			{
+	while (temp != NULL) {
+		if (temp->department == 2) {
+			if (temp->numOfUnits > (temp->thresholdLimit * 2)) {
 				count++;
 			}
 		}
@@ -816,41 +787,32 @@ void printToFile(struct node* top)
 
 void stockInOrder(struct node* top)
 {
-	int sorted = 0;
-	int count = 0;
-	int highestStockNum = 0;
+	int sorted, count, highestStockNum;
 	float highest, newHighest, value;
 	struct node* temp = top;
+	sorted = count = highestStockNum = 0;
 	highest = (float)temp->numOfUnits * temp->costPerUnit;
 	newHighest = highest;
 	highestStockNum = temp->number;
-	for (int i = 0; i < length(top); i++)
-	{
-		count++;
-		while (temp != NULL)
-		{
 
+	for (int i = 0; i < length(top); i++) {
+		count++;
+		while (temp != NULL) {
 			value = temp->numOfUnits * temp->costPerUnit;
-			if (value > highest && count == 1)
-			{
+			if (value > highest && count == 1) {
 				highest = value;
 				newHighest = highest;
 				highestStockNum = temp->number;
-
 			}
-			else if (value < highest && count != 1)
-			{
-				if (newHighest == highest)
-				{
+			else if (value < highest && count != 1) {
+				if (newHighest == highest) {
 					newHighest = value;
 				}
-				if (value > newHighest && value < highest)
-				{
+				if (value > newHighest && value < highest) {
 					newHighest = value;
 					highestStockNum = temp->number;
 				}
-				else if (value == newHighest && value < highest)
-				{
+				else if (value == newHighest && value < highest) {
 					newHighest = value;
 					highestStockNum = temp->number;
 				}
