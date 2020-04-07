@@ -28,6 +28,7 @@ void fillDatabase(struct node* top);
 void saveDatabase(struct node* top);
 void addItemAtStart(struct node** top);
 void addItemAtEnd(struct node* top);
+int isUnique(int stockNum, struct node* top);
 void displayDatabase(struct node* top);
 void displayItem(struct node* top);
 void updateItem(struct node* top);
