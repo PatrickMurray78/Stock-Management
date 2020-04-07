@@ -543,25 +543,22 @@ void generateStats(struct node* top)
 		printf("\nB. %% of stock items below twice the re-order threshold limit");
 		printf("\nC. %% of stock items above twice the re-order threshold limit");
 		printf("\n=> ");
-		scanf("%c", &option);
+		scanf(" %c", &option);
 	} while (option != 'A' && option != 'B' && option != 'C');
 
-	if (option == 'A')
-	{
-		printf("\nPlease select a department");
-		printf("\n1. Office");
-		printf("\n2. Maintenance");
-		printf("\n=> ");
-		scanf("%d", &department);
+	if (option == 'A') {
+		do {
+			printf("\nPlease select a department");
+			printf("\n1. Office");
+			printf("\n2. Maintenance");
+			printf("\n=> ");
+			scanf("%d", &department);
+		} while (department != 1 && department != 2);
 
-		if (department == 1)
-		{
-			while (temp != NULL)
-			{
-				if (temp->department == 1)
-				{
-					if (temp->numOfUnits < temp->thresholdLimit)
-					{
+		if (department == 1) {
+			while (temp != NULL) {
+				if (temp->department == 1) {
+					if (temp->numOfUnits < temp->thresholdLimit) {
 						count++;
 					}
 				}
@@ -569,14 +566,10 @@ void generateStats(struct node* top)
 			}
 			stockPercentage = (count / size) * 100;
 		}
-		else if (department == 2)
-		{
-			while (temp != NULL)
-			{
-				if (temp->department == 2)
-				{
-					if (temp->numOfUnits < temp->thresholdLimit)
-					{
+		else if (department == 2) {
+			while (temp != NULL) {
+				if (temp->department == 2) {
+					if (temp->numOfUnits < temp->thresholdLimit) {
 						count++;
 					}
 				}
@@ -586,22 +579,19 @@ void generateStats(struct node* top)
 		}
 		printf("\nThere are %.2f%% items below the re-order threshold limit\n", stockPercentage);
 	}
-	else if (option == 'B')
-	{
-		printf("\nPlease select a department");
-		printf("\n1. Office");
-		printf("\n2. Maintenance");
-		printf("\n=> ");
-		scanf("%d", &department);
+	else if (option == 'B') {
+		do {
+			printf("\nPlease select a department");
+			printf("\n1. Office");
+			printf("\n2. Maintenance");
+			printf("\n=> ");
+			scanf("%d", &department);
+		} while (department != 1 && department != 2);
 
-		if (department == 1)
-		{
-			while (temp != NULL)
-			{
-				if (temp->department == 1)
-				{
-					if (temp->numOfUnits < (temp->thresholdLimit * 2))
-					{
+		if (department == 1) {
+			while (temp != NULL) {
+				if (temp->department == 1) {
+					if (temp->numOfUnits < (temp->thresholdLimit * 2)) {
 						count++;
 					}
 				}
@@ -609,14 +599,10 @@ void generateStats(struct node* top)
 			}
 			stockPercentage = (count / size) * 100;
 		}
-		else if (department == 2)
-		{
-			while (temp != NULL)
-			{
-				if (temp->department == 2)
-				{
-					if (temp->numOfUnits < (temp->thresholdLimit * 2))
-					{
+		else if (department == 2) {
+			while (temp != NULL) {
+				if (temp->department == 2) {
+					if (temp->numOfUnits < (temp->thresholdLimit * 2)) {
 						count++;
 					}
 				}
@@ -627,20 +613,18 @@ void generateStats(struct node* top)
 		printf("\nThere are %.2f%% items below twice the re-order threshold limit\n", stockPercentage);
 	}
 	else if (option == 'C') {
-		printf("\nPlease select a department");
-		printf("\n1. Office");
-		printf("\n2. Maintenance");
-		printf("\n=> ");
-		scanf("%d", &department);
+		do {
+			printf("\nPlease select a department");
+			printf("\n1. Office");
+			printf("\n2. Maintenance");
+			printf("\n=> ");
+			scanf("%d", &department);
+		} while (department != 1 && department != 2);
 
-		if (department == 1)
-		{
-			while (temp != NULL)
-			{
-				if (temp->department == 1)
-				{
-					if (temp->numOfUnits > (temp->thresholdLimit * 2))
-					{
+		if (department == 1) {
+			while (temp != NULL) {
+				if (temp->department == 1) {
+					if (temp->numOfUnits > (temp->thresholdLimit * 2)) {
 						count++;
 					}
 				}
@@ -648,14 +632,10 @@ void generateStats(struct node* top)
 			}
 			stockPercentage = (count / size) * 100;
 		}
-		else if (department == 2)
-		{
-			while (temp != NULL)
-			{
-				if (temp->department == 2)
-				{
-					if (temp->numOfUnits > (temp->thresholdLimit * 2))
-					{
+		else if (department == 2) {
+			while (temp != NULL) {
+				if (temp->department == 2) {
+					if (temp->numOfUnits > (temp->thresholdLimit * 2)) {
 						count++;
 					}
 				}
