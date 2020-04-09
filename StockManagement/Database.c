@@ -90,14 +90,18 @@ void addItemAtStart(struct node** top)
 		printf("\nStock Item Number: ");
 		scanf("%d", &newNode->number);
 	} while (newNode->number < 0);
-	printf("Stock Item Name: ");
-	scanf(" %[^\n]s", newNode->name);
-	printf("Stock Item Supplier Name: ");
-	scanf(" %[^\n]s", newNode->supplierName);
+	do {
+		printf("Stock Item Name: ");
+		scanf(" %[^\n]s", newNode->name);
+	} while (strlen(newNode->name) > 30);
+	do {
+		printf("Stock Item Supplier Name: ");
+		scanf(" %[^\n]s", newNode->supplierName);
+	} while (strlen(newNode->supplierNumber) > 30);
 	do {
 		printf("Stock Item Supplier Contact Number: ");
-		scanf("%d", &newNode->supplierNumber);
-	} while (newNode->supplierNumber < 0);
+		scanf("%s", newNode->supplierNumber);
+	} while (strlen(newNode->supplierNumber) > 10);
 	do {
 		printf("Re-order threshold limit: ");
 		scanf("%d", &newNode->thresholdLimit);
@@ -110,8 +114,10 @@ void addItemAtStart(struct node** top)
 		printf("Cost per Unit: ");
 		scanf("%f", &newNode->costPerUnit);
 	} while (newNode->costPerUnit < 0);
-	printf("Last Order Date(DD/MM/YYYY): ");
-	scanf("%s", newNode->lastOrderDate);
+	do {
+		printf("Last Order Date(DD/MM/YYYY): ");
+		scanf("%s", newNode->lastOrderDate);
+	} while (strlen(newNode->lastOrderDate) > 10);
 	do {
 		printf("Does this item need to be stored in a hazardous chemical store?");
 		printf("\n1. Yes");
@@ -159,14 +165,18 @@ void addItemAtEnd(struct node* top)
 		scanf("%d", &newNode->number);
 		stockNum = newNode->number;
 	} while (newNode->number < 0 || isUnique(stockNum, temp) == 0);
-	printf("Stock Item Name: ");
-	scanf(" %[^\n]s", newNode->name);
-	printf("Stock Item Supplier Name: ");
-	scanf(" %[^\n]s", newNode->supplierName);
+	do {
+		printf("Stock Item Name: ");
+		scanf(" %[^\n]s", newNode->name);
+	} while (strlen(newNode->name) > 30);
+	do {
+		printf("Stock Item Supplier Name: ");
+		scanf(" %[^\n]s", newNode->supplierName);
+	} while (strlen(newNode->supplierNumber) > 30);
 	do {
 		printf("Stock Item Supplier Contact Number: ");
-		scanf("%d", &newNode->supplierNumber);
-	} while (newNode->supplierNumber < 0);
+		scanf("%s", newNode->supplierNumber);
+	} while (strlen(newNode->supplierNumber) > 10);
 	do {
 		printf("Re-order threshold limit: ");
 		scanf("%d", &newNode->thresholdLimit);
@@ -179,8 +189,10 @@ void addItemAtEnd(struct node* top)
 		printf("Cost per Unit: ");
 		scanf("%f", &newNode->costPerUnit);
 	} while (newNode->costPerUnit < 0);
-	printf("Last Order Date(DD/MM/YYYY): ");
-	scanf("%s", newNode->lastOrderDate);
+	do {
+		printf("Last Order Date(DD/MM/YYYY): ");
+		scanf("%s", newNode->lastOrderDate);
+	} while (strlen(newNode->lastOrderDate) > 10);
 	do {
 		printf("Does this item need to be stored in a hazardous chemical store?");
 		printf("\n1. Yes");

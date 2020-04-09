@@ -10,7 +10,7 @@ typedef struct node {
 	int number;
 	char name[30];
 	char supplierName[30];
-	char supplierNumber[15];
+	char supplierNumber[10];
 	int thresholdLimit;
 	int numOfUnits;
 	float costPerUnit;
