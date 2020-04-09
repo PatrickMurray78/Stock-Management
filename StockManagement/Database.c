@@ -13,9 +13,9 @@ void init(struct node** top)
 	}
 	else {
 		numInputs = fscanf(fptr, "%d", &newNode->number);
-		numInputs += fscanf(fptr, " %[^\n]s", &newNode->name);
+		numInputs += fscanf(fptr, " %[^\n]s", newNode->name);
 		numInputs += fscanf(fptr, " %[^\n]s", newNode->supplierName);
-		numInputs += fscanf(fptr, "%ld", &newNode->supplierNumber);
+		numInputs += fscanf(fptr, " %s", newNode->supplierNumber);
 		numInputs += fscanf(fptr, "%d %d %f", &newNode->thresholdLimit, &newNode->numOfUnits, &newNode->costPerUnit);
 		numInputs += fscanf(fptr, "%s %d %d %d %d", newNode->lastOrderDate, &newNode->isHazardousChemical,
 			&newNode->department, &newNode->reOrderMonth, &newNode->authority);
@@ -41,7 +41,7 @@ void fillDatabase(struct node* top)
 		numInputs = fscanf(fptr, "%d", &newNode->number);
 		numInputs += fscanf(fptr, " %[^\n]s", &newNode->name);
 		numInputs += fscanf(fptr, " %[^\n]s", newNode->supplierName);
-		numInputs += fscanf(fptr, "%ld", &newNode->supplierNumber);
+		numInputs += fscanf(fptr, "%s", newNode->supplierNumber);
 		numInputs += fscanf(fptr, "%d %d %f", &newNode->thresholdLimit, &newNode->numOfUnits, &newNode->costPerUnit);
 		numInputs += fscanf(fptr, "%s %d %d %d %d", newNode->lastOrderDate, &newNode->isHazardousChemical,
 			&newNode->department, &newNode->reOrderMonth, &newNode->authority);
@@ -246,10 +246,10 @@ void displayDatabase(struct node* top)
 		printf("\nStock Item Number: %d", temp->number);
 		printf("\nStock Item Name: %s", temp->name);
 		printf("\nStock Item Supplier Name: %s", temp->supplierName);
-		printf("\nStock Item Supplier Contact Number: %d", temp->supplierNumber);
+		printf("\nStock Item Supplier Contact Number: %s", temp->supplierNumber);
 		printf("\nRe-order threshold limit: %d", temp->thresholdLimit);
 		printf("\nNumber of Units: %d", temp->numOfUnits);
-		printf("\nCost per Unit: %f", temp->costPerUnit);
+		printf("\nCost per Unit: %.2f", temp->costPerUnit);
 		printf("\nLast Order Date(DDMMYYYY): %s", temp->lastOrderDate);
 		printf("\nDoes this item need to be stored in a hazardous chemical store?");
 		printf("\n-> %s", isHazardous);
@@ -266,7 +266,7 @@ void displayItem(struct node* top)
 	char isHazardous[5];
 	char department[15];
 	char reOrderMonth[20];
-	char authority[20];
+	char authority[25];
 	int option, searchNum, ret;
 	struct node* temp = top;
 
@@ -289,7 +289,7 @@ void displayItem(struct node* top)
 				printf("\nStock Item Number: %d", temp->number);
 				printf("\nStock Item Name: %s", temp->name);
 				printf("\nStock Item Supplier Name: %s", temp->supplierName);
-				printf("\nStock Item Supplier Contact Number: %d", temp->supplierNumber);
+				printf("\nStock Item Supplier Contact Number: %s", temp->supplierNumber);
 				printf("\nRe-order threshold limit: %d", temp->thresholdLimit);
 				printf("\nNumber of Units: %d", temp->numOfUnits);
 				printf("\nCost per Unit: %.2f", temp->costPerUnit);
@@ -308,7 +308,7 @@ void displayItem(struct node* top)
 	else {
 		printf("\nPlease enter the Stock Item Name");
 		printf("\n=> ");
-		scanf("%s", searchName);
+		scanf(" %[^\n]s", searchName);
 		while (temp != NULL) {
 			ret = strcmp(temp->name, searchName);
 			if (ret == 0) {
@@ -317,7 +317,7 @@ void displayItem(struct node* top)
 				printf("\nStock Item Number: %d", temp->number);
 				printf("\nStock Item Name: %s", temp->name);
 				printf("\nStock Item Supplier Name: %s", temp->supplierName);
-				printf("\nStock Item Supplier Contact Number: %d", temp->supplierNumber);
+				printf("\nStock Item Supplier Contact Number: %s", temp->supplierNumber);
 				printf("\nRe-order threshold limit: %d", temp->thresholdLimit);
 				printf("\nNumber of Units: %d", temp->numOfUnits);
 				printf("\nCost per Unit: %.2f", temp->costPerUnit);
@@ -369,7 +369,7 @@ void updateItem(struct node* top)
 	else {
 		printf("\nPlease enter the Stock Item Name");
 		printf("\n=> ");
-		scanf("%s", searchName);
+		scanf(" %[^\n]s", searchName);
 		while (temp != NULL) {
 			ret = strcmp(temp->name, searchName);
 			if (ret == 0) {
