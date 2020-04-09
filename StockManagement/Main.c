@@ -91,7 +91,7 @@ void showMenu(struct node* top, struct node** top2)
 			break;
 		case 8:
 			if (top == NULL) {
-				printf("\nDatabase is empty!");
+				printf("\nDatabase is empty, unable to display");
 			}
 			else {
 				stockInOrder(top);
