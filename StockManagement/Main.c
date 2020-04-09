@@ -1,7 +1,6 @@
 #include "Database.h"
 #include "Login.h"
 
-void showMenu(struct node* top, struct node** top2);
 
 void main()
 {
@@ -11,13 +10,6 @@ void main()
 
 	init(&headPtr);
 	fillDatabase(headPtr);
-	
-	showMenu(headPtr, &headPtr);
-	
-}
-
-void showMenu(struct node* top, struct node** top2)
-{
 	int mode;
 
 	do {
@@ -34,75 +26,75 @@ void showMenu(struct node* top, struct node** top2)
 
 		switch (mode) {
 		case 1:
-			if (top == NULL) {
-				addItemAtStart(&top2);
+			if (headPtr == NULL) {
+				addItemAtStart(&headPtr);
 			}
 			else {
-				addItemAtEnd(top);
+				addItemAtEnd(headPtr);
 			}
 			break;
 		case 2:
-			if (top == NULL) {
+			if (headPtr == NULL) {
 				printf("\nDatabase is empty, can't display!");
 			}
 			else {
-				displayDatabase(top);
+			displayDatabase(headPtr);
 			}
 			break;
 		case 3:
-			if (top == NULL) {
+			if (headPtr == NULL) {
 				printf("\nDatabase is empty, can't display!");
 			}
 			else {
-				displayItem(top);
+				displayItem(headPtr);
 			}
 			break;
 		case 4:
-			if (top == NULL) {
+			if (headPtr == NULL) {
 				printf("\nDatabase is empty, can't update stock items!");
 			}
 			else {
-				updateItem(top);
+				updateItem(headPtr);
 			}
 			break;
 		case 5:
-			if (top == NULL) {
+			if (headPtr == NULL) {
 				printf("Database is empty, can't remove stock items!");
 			}
 			else {
-				deleteItem(top, &top2);
+				deleteItem(headPtr, &headPtr);
 			}
 			break;
 		case 6:
-			if (top == NULL) {
+			if (headPtr == NULL) {
 				printf("\nDatabase is empty, unable to generate statistics!");
 			}
 			else {
-				generateStats(top);
+				generateStats(headPtr);
 			}
 			break;
 		case 7:
-			if (top == NULL) {
+			if (headPtr == NULL) {
 				printf("\nDatabase is empty, unable to create report!");
 			}
 			else {
-				printToFile(top);
+				printToFile(headPtr);
 			}
 			break;
 		case 8:
-			if (top == NULL) {
+			if (headPtr == NULL) {
 				printf("\nDatabase is empty, unable to display");
 			}
 			else {
-				stockInOrder(top);
+				stockInOrder(headPtr);
 			}
 			break;
 		case -1:
-			if (top == NULL) {
+			if (headPtr == NULL) {
 				printf("\nDatabase is empty!");
 			}
 			else {
-				saveDatabase(top);
+				saveDatabase(headPtr);
 			}
 			printf("\nGoodbye.");
 			break;
