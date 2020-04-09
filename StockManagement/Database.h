@@ -8,9 +8,9 @@
 
 typedef struct node {
 	int number;
-	char name[20];
-	char supplierName[20];
-	long supplierNumber;
+	char name[30];
+	char supplierName[30];
+	char supplierNumber[15];
 	int thresholdLimit;
 	int numOfUnits;
 	float costPerUnit;
@@ -34,7 +34,7 @@ void updateItem(struct node* top);
 void deleteItem(struct node* top, struct node** top2);
 int length(struct node* top);
 void generateStats(struct node* top);
-void printToFile(struct node* top);
+void createReport(struct node* top);
 void stockInOrder(struct node* top);
 char createStrings(struct node* temp, char isHazardous[5], char department[15], char reOrderMonth[20], char authority[20]);
 

@@ -529,7 +529,7 @@ void generateStats(struct node* top)
 	}
 }
 
-void printToFile(struct node* top)
+void createReport(struct node* top)
 {
 	float stockPercentage, size, count = 0;
 	char isHazardous[5];

@@ -78,7 +78,7 @@ void main()
 				printf("\nDatabase is empty, unable to create report!");
 			}
 			else {
-				printToFile(headPtr);
+				createReport(headPtr);
 			}
 			break;
 		case 8:
