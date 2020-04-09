@@ -85,9 +85,9 @@ void addItemAtStart(struct node** top)
 		scanf("%d", &newNode->number);
 	} while (newNode->number < 0);
 	printf("Stock Item Name: ");
-	scanf("%s", newNode->name);
+	scanf(" %[^\n]s", newNode->name);
 	printf("Stock Item Supplier Name: ");
-	scanf("%s", newNode->supplierName);
+	scanf(" %[^\n]s", newNode->supplierName);
 	do {
 		printf("Stock Item Supplier Contact Number: ");
 		scanf("%d", &newNode->supplierNumber);
@@ -133,7 +133,7 @@ void addItemAtStart(struct node** top)
 		printf("\n1. Managing Director");
 		printf("\n2. Financial Controller");
 		printf("\n3. Department Manager");
-		printf("=> ");
+		printf("\n=> ");
 		scanf("%d", &newNode->authority);
 	} while (newNode->authority < 1 || newNode->authority > 3);
 
@@ -154,9 +154,9 @@ void addItemAtEnd(struct node* top)
 		stockNum = newNode->number;
 	} while (newNode->number < 0 || isUnique(stockNum, temp) == 0);
 	printf("Stock Item Name: ");
-	scanf("%s", newNode->name);
+	scanf(" %[^\n]s", newNode->name);
 	printf("Stock Item Supplier Name: ");
-	scanf("%s", newNode->supplierName);
+	scanf(" %[^\n]s", newNode->supplierName);
 	do {
 		printf("Stock Item Supplier Contact Number: ");
 		scanf("%d", &newNode->supplierNumber);
@@ -202,7 +202,7 @@ void addItemAtEnd(struct node* top)
 		printf("\n1. Managing Director");
 		printf("\n2. Financial Controller");
 		printf("\n3. Department Manager");
-		printf("=> ");
+		printf("\n=> ");
 		scanf("%d", &newNode->authority);
 	} while (newNode->authority < 1 || newNode->authority > 3);
 
@@ -212,69 +212,6 @@ void addItemAtEnd(struct node* top)
 
 	newNode->NEXT = NULL;
 	temp->NEXT = newNode;
-}
-
-struct node getItemDetails(struct node* newNode)
-{
-	printf("\nPlease enter the following details");
-	do {
-		printf("\nStock Item Number: ");
-		scanf("%d", &newNode->number);
-	} while (newNode->number < 0);
-	printf("Stock Item Name: ");
-	scanf("%s", newNode->name);
-	printf("Stock Item Supplier Name: ");
-	scanf("%s", newNode->supplierName);
-	do {
-		printf("Stock Item Supplier Contact Number: ");
-		scanf("%d", &newNode->supplierNumber);
-	} while (newNode->supplierNumber < 0);
-	do {
-		printf("Re-order threshold limit: ");
-		scanf("%d", &newNode->thresholdLimit);
-	} while (newNode->thresholdLimit < 0);
-	do {
-		printf("Number of Units: ");
-		scanf("%d", &newNode->numOfUnits);
-	} while (newNode->numOfUnits < 0);
-	do {
-		printf("Cost per Unit: ");
-		scanf("%f", &newNode->costPerUnit);
-	} while (newNode->costPerUnit < 0);
-	printf("Last Order Date(DD/MM/YYYY): ");
-	scanf("%s", newNode->lastOrderDate);
-	do {
-		printf("Does this item need to be stored in a hazardous chemical store?");
-		printf("\n1. Yes");
-		printf("\n2. No");
-		printf("\n=> ");
-		scanf("%d", &newNode->isHazardousChemical);
-	} while (newNode->isHazardousChemical != 1 && newNode->isHazardousChemical != 2);
-	do {
-		printf("Which Department does this stock item belong to?");
-		printf("\n1. Office");
-		printf("\n2. Maintenance");
-		printf("\n=> ");
-		scanf("%d", &newNode->department);
-	} while (newNode->department != 1 && newNode->department != 2);
-	do {
-		printf("Which of the following months do items need to re-order?");
-		printf("\n1. No Specified Month");
-		printf("\n2. Feb");
-		printf("\n3. August");
-		printf("\n=> ");
-		scanf("%d", &newNode->reOrderMonth);
-	} while (newNode->reOrderMonth < 1 || newNode->reOrderMonth > 3);
-	do {
-		printf("Which of the following people need to authorise the purchase?");
-		printf("\n1. Managing Director");
-		printf("\n2. Financial Controller");
-		printf("\n3. Department Manager");
-		printf("=> ");
-		scanf("%d", &newNode->authority);
-	} while (newNode->authority < 1 || newNode->authority > 3);
-
-	return structnewNode;
 }
 
 int isUnique(int stockNum, struct node* top)
@@ -296,7 +233,7 @@ void displayDatabase(struct node* top)
 	char isHazardous[5];
 	char department[15];
 	char reOrderMonth[20];
-	char authority[20];
+	char authority[25];
 	struct node* temp = top;
 
 	while (temp != NULL) {
@@ -351,7 +288,7 @@ void displayItem(struct node* top)
 				printf("\nStock Item Supplier Contact Number: %d", temp->supplierNumber);
 				printf("\nRe-order threshold limit: %d", temp->thresholdLimit);
 				printf("\nNumber of Units: %d", temp->numOfUnits);
-				printf("\nCost per Unit: %f", temp->costPerUnit);
+				printf("\nCost per Unit: %.2f", temp->costPerUnit);
 				printf("\nLast Order Date(DDMMYYYY): %s", temp->lastOrderDate);
 				printf("\nDoes this item need to be stored in a hazardous chemical store?");
 				printf("\n-> %s", isHazardous);
@@ -379,7 +316,7 @@ void displayItem(struct node* top)
 				printf("\nStock Item Supplier Contact Number: %d", temp->supplierNumber);
 				printf("\nRe-order threshold limit: %d", temp->thresholdLimit);
 				printf("\nNumber of Units: %d", temp->numOfUnits);
-				printf("\nCost per Unit: %f", temp->costPerUnit);
+				printf("\nCost per Unit: %.2f", temp->costPerUnit);
 				printf("\nLast Order Date(DDMMYYYY): %s", temp->lastOrderDate);
 				printf("\nDoes this item need to be stored in a hazardous chemical store?");
 				printf("\n-> %s", isHazardous);
@@ -604,7 +541,7 @@ void printToFile(struct node* top)
 	char isHazardous[5];
 	char department[15];
 	char reOrderMonth[20];
-	char authority[20];
+	char authority[25];
 
 	size = (float)length(top);
 	FILE* fptr;
