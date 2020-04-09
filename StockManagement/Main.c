@@ -7,10 +7,10 @@ void main()
 {
 	struct node* headPtr = NULL;
 
-	initLogin();
+	//initLogin();
 
 	init(&headPtr);
-	addEnd(headPtr);
+	fillDatabase(headPtr);
 	
 	showMenu(headPtr, &headPtr);
 	
@@ -42,34 +42,69 @@ void showMenu(struct node* top, struct node** top2)
 			}
 			break;
 		case 2:
-			displayDatabase(top);
+			if (top == NULL) {
+				printf("\nDatabase is empty, can't display!");
+			}
+			else {
+				displayDatabase(top);
+			}
 			break;
 		case 3:
-			displayItem(top);
+			if (top == NULL) {
+				printf("\nDatabase is empty, can't display!");
+			}
+			else {
+				displayItem(top);
+			}
 			break;
 		case 4:
-			updateItem(top);
+			if (top == NULL) {
+				printf("\nDatabase is empty, can't update stock items!");
+			}
+			else {
+				updateItem(top);
+			}
 			break;
 		case 5:
 			if (top == NULL) {
-				printf("Sorry the database is empty");
+				printf("Database is empty, can't remove stock items!");
 			}
 			else {
 				deleteItem(top, &top2);
 			}
 			break;
 		case 6:
-			generateStats(top);
+			if (top == NULL) {
+				printf("\nDatabase is empty, unable to generate statistics!");
+			}
+			else {
+				generateStats(top);
+			}
 			break;
 		case 7:
-			printToFile(top);
+			if (top == NULL) {
+				printf("\nDatabase is empty, unable to create report!");
+			}
+			else {
+				printToFile(top);
+			}
 			break;
 		case 8:
-			stockInOrder(top);
+			if (top == NULL) {
+				printf("\nDatabase is empty!");
+			}
+			else {
+				stockInOrder(top);
+			}
 			break;
 		case -1:
-			saveDatabase(top);
-			printf("Goodbye.");
+			if (top == NULL) {
+				printf("\nDatabase is empty!");
+			}
+			else {
+				saveDatabase(top);
+			}
+			printf("\nGoodbye.");
 			break;
 		default:
 			printf("\nInvalid Mode, please try again!");
