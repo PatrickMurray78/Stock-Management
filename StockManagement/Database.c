@@ -69,8 +69,10 @@ void saveDatabase(struct node* top)
 	struct node* temp = top;
 
 	while (temp != NULL) {
-		fprintf(fptr, "%d %s", temp->number, temp->name);
-		fprintf(fptr, "\n%s %ld", temp->supplierName, temp->supplierNumber);
+		fprintf(fptr, "%d", temp->number);
+		fprintf(fptr, "\n%s", temp->name);
+		fprintf(fptr, "\n%s", temp->supplierName);
+		fprintf(fptr, "\n%s", temp->supplierNumber);
 		fprintf(fptr, "\n%d %d %.2f", temp->thresholdLimit, temp->numOfUnits, temp->costPerUnit);
 		fprintf(fptr, "\n%s %d %d %d %d\n\n", temp->lastOrderDate, temp->isHazardousChemical,
 			temp->department, temp->reOrderMonth, temp->authority);
@@ -559,7 +561,7 @@ void printToFile(struct node* top)
 		fprintf(fptr, "Stock Item Number: %d", temp->number);
 		fprintf(fptr, "\nStock Item Name: %s", temp->name);
 		fprintf(fptr, "\nStock Item Supplier Name: %s", temp->supplierName);
-		fprintf(fptr, "\nStock Item Supplier Contact Number: %d", temp->supplierNumber);
+		fprintf(fptr, "\nStock Item Supplier Contact Number: %s", temp->supplierNumber);
 		fprintf(fptr, "\nRe-order threshold limit: %d", temp->thresholdLimit);
 		fprintf(fptr, "\nNumber of Units: %d", temp->numOfUnits);
 		fprintf(fptr, "\nCost per Unit: %.2f", temp->costPerUnit);
