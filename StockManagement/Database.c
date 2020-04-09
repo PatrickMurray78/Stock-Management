@@ -12,8 +12,10 @@ void init(struct node** top)
 		printf("\nSorry the file could not be opened");
 	}
 	else {
-		numInputs = fscanf(fptr, "%d %s", &newNode->number, &newNode->name);
-		numInputs += fscanf(fptr, "%s %ld", newNode->supplierName, &newNode->supplierNumber);
+		numInputs = fscanf(fptr, "%d", &newNode->number);
+		numInputs += fscanf(fptr, " %[^\n]s", &newNode->name);
+		numInputs += fscanf(fptr, " %[^\n]s", newNode->supplierName);
+		numInputs += fscanf(fptr, "%ld", &newNode->supplierNumber);
 		numInputs += fscanf(fptr, "%d %d %f", &newNode->thresholdLimit, &newNode->numOfUnits, &newNode->costPerUnit);
 		numInputs += fscanf(fptr, "%s %d %d %d %d", newNode->lastOrderDate, &newNode->isHazardousChemical,
 			&newNode->department, &newNode->reOrderMonth, &newNode->authority);
@@ -36,8 +38,10 @@ void fillDatabase(struct node* top)
 
 	while (!feof(fptr)) {
 		struct node* newNode = (struct node*)malloc(sizeof(struct node));
-		numInputs = fscanf(fptr, "%d %s", &newNode->number, &newNode->name);
-		numInputs += fscanf(fptr, "%s %ld", newNode->supplierName, &newNode->supplierNumber);
+		numInputs = fscanf(fptr, "%d", &newNode->number);
+		numInputs += fscanf(fptr, " %[^\n]s", &newNode->name);
+		numInputs += fscanf(fptr, " %[^\n]s", newNode->supplierName);
+		numInputs += fscanf(fptr, "%ld", &newNode->supplierNumber);
 		numInputs += fscanf(fptr, "%d %d %f", &newNode->thresholdLimit, &newNode->numOfUnits, &newNode->costPerUnit);
 		numInputs += fscanf(fptr, "%s %d %d %d %d", newNode->lastOrderDate, &newNode->isHazardousChemical,
 			&newNode->department, &newNode->reOrderMonth, &newNode->authority);
