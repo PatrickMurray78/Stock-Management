@@ -19,7 +19,6 @@ typedef struct node {
 	int department;
 	int reOrderMonth;
 	int authority;
-	struct node* PREV;
 	struct node* NEXT;
 }Database;
 
@@ -28,6 +27,7 @@ void fillDatabase(struct node* top);
 void saveDatabase(struct node* top);
 void addItemAtStart(struct node** top);
 void addItemAtEnd(struct node* top);
+void getItemDetails(struct node* top);
 int isUnique(int stockNum, struct node* top);
 void displayDatabase(struct node* top);
 void displayItem(struct node* top);
