@@ -428,18 +428,6 @@ void deleteItem(struct node* top, struct node** top2)
 	}
 }
 
-int length(struct node* top)
-{
-	int i = 0;
-	struct node* temp = top;
-	
-	while (temp != NULL) {
-		i++;
-		temp = temp->NEXT;
-	}
-	return i;
-}
-
 void generateStats(struct node* top)
 {
 	char option = ' ';
@@ -487,7 +475,7 @@ void generateStats(struct node* top)
 			}
 			stockPercentage = (count / size) * 100;
 		}
-		printf("\nThere are %.2f%% items below the re-order threshold limit\n", stockPercentage);
+		printf("\n%.2f%% of the items are below the re-order threshold limit\n", stockPercentage);
 	}
 	else if (option == 'B') {
 		if (department == 1) {
@@ -512,7 +500,7 @@ void generateStats(struct node* top)
 			}
 			stockPercentage = (count / size) * 100;
 		}
-		printf("\nThere are %.2f%% items below twice the re-order threshold limit\n", stockPercentage);
+		printf("\n%.2f%% of the items are below twice the re-order threshold limit\n", stockPercentage);
 	}
 	else if (option == 'C') {
 		if (department == 1) {
@@ -537,7 +525,7 @@ void generateStats(struct node* top)
 			}
 			stockPercentage = (count / size) * 100;
 		}
-		printf("\nThere are %.2f%% items above twice the re-order threshold limit\n", stockPercentage);
+		printf("\n%.2f%% of the items are above twice the re-order threshold limit\n", stockPercentage);
 	}
 }
 
@@ -583,7 +571,7 @@ void printToFile(struct node* top)
 	}
 	temp = top;
 	stockPercentage = (count / size) * 100;
-	fprintf(fptr, "\nThere are %.2f%% items below the re-order threshold limit in the Office Department", stockPercentage);
+	fprintf(fptr, "\n%.2f%% of the items are below the re-order threshold limit in the Office Department", stockPercentage);
 	count = 0;
 	while (temp != NULL) {
 		if (temp->department == 2) {
@@ -595,7 +583,7 @@ void printToFile(struct node* top)
 	}
 	temp = top;
 	stockPercentage = (count / size) * 100;
-	fprintf(fptr, "\nThere are %.2f%% items below the re-order threshold limit in the Maintenance Department", stockPercentage);
+	fprintf(fptr, "\n%.2f%% of the items are below the re-order threshold limit in the Maintenance Department", stockPercentage);
 	count = 0;
 	while (temp != NULL) {
 		if (temp->department == 1) {
@@ -607,7 +595,7 @@ void printToFile(struct node* top)
 	}
 	temp = top;
 	stockPercentage = (count / size) * 100;
-	fprintf(fptr, "\nThere are %.2f%% items below twice the re-order threshold limit in the Office Department", stockPercentage);
+	fprintf(fptr, "\n%.2f%% of the items are below twice the re-order threshold limit in the Office Department", stockPercentage);
 	count = 0;
 	while (temp != NULL) {
 		if (temp->department == 2) {
@@ -619,7 +607,7 @@ void printToFile(struct node* top)
 	}
 	temp = top;
 	stockPercentage = (count / size) * 100;
-	fprintf(fptr, "\nThere are %.2f%% items below twice the re-order threshold limit in the Maintenance Department", stockPercentage);
+	fprintf(fptr, "\n%.2f%% of the items are below twice the re-order threshold limit in the Maintenance Department", stockPercentage);
 	count = 0;
 	while (temp != NULL) {
 		if (temp->department == 1) {
@@ -631,7 +619,7 @@ void printToFile(struct node* top)
 	}
 	temp = top;
 	stockPercentage = (count / size) * 100;
-	fprintf(fptr, "\nThere are %.2f%% items above twice the re-order threshold limit in the Office Department", stockPercentage);
+	fprintf(fptr, "\n%.2f%% of the items are above twice the re-order threshold limit in the Office Department", stockPercentage);
 	count = 0;
 	while (temp != NULL) {
 		if (temp->department == 2) {
@@ -642,7 +630,7 @@ void printToFile(struct node* top)
 		temp = temp->NEXT;
 	}
 	stockPercentage = (count / size) * 100;
-	fprintf(fptr, "\nThere are %.2f%% items above twice the re-order threshold limit in the Maintenance Department", stockPercentage);
+	fprintf(fptr, "\n%.2f%% of the items are above twice the re-order threshold limit in the Maintenance Department", stockPercentage);
 	count = 0;
 	fclose(fptr);
 }
@@ -687,6 +675,18 @@ void stockInOrder(struct node* top)
 		temp = top;
 	}
 	printf("\n");
+}
+
+int length(struct node* top)
+{
+	int i = 0;
+	struct node* temp = top;
+
+	while (temp != NULL) {
+		i++;
+		temp = temp->NEXT;
+	}
+	return i;
 }
 
 char createStrings(struct node* temp, char isHazardous[5], char department[15], char reOrderMonth[20], char authority[20])
