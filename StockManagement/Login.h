@@ -6,9 +6,10 @@
 typedef struct {
 	char username[15];
 	char password[8];
+	struct node* NEXT;
 }Login;
 
 void initLogin();
-void login(Login credentials);
+void login(Login* top);
 
 #endif
