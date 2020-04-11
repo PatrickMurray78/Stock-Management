@@ -6,6 +6,7 @@
 #include<string.h>
 #include<stdlib.h>
 
+// Declare struct
 typedef struct node {
 	int number;
 	char name[30];
@@ -22,6 +23,7 @@ typedef struct node {
 	struct node* NEXT;
 }Database;
 
+// Initialise functions
 void init(struct node** top);
 void fillDatabase(struct node* top);
 void saveDatabase(struct node* top);
