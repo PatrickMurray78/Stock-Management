@@ -1,17 +1,24 @@
 #include "Database.h"
 #include "Login.h"
 
-
+/*
+	The main function contains the menu for the program, it also
+	calls the initLogin() function which is where you enter the
+	username and password. The init() and fillDatabase() functions
+	are used to fill the database if there are already stock items in
+	the save file.
+*/
 void main()
 {
+	int mode;
 	struct node* headPtr = NULL;
 
-	//initLogin();
+	initLogin();
 
 	init(&headPtr);
 	fillDatabase(headPtr);
-	int mode;
 
+	// Menu
 	do {
 		printf("\n\n1. Add Stock Item");
 		printf("\n2. Display All Stock Items");
@@ -24,11 +31,15 @@ void main()
 		printf("\nPlease enter mode: ");
 		scanf("%d", &mode);
 
+		// Switch with input validation. Once -1 is entered, database is
+		// saved to database.txt and program exits.
 		switch (mode) {
 		case 1:
+			// If database is empty
 			if (headPtr == NULL) {
 				addItemAtStart(&headPtr);
 			}
+			// If database is not empty
 			else {
 				addItemAtEnd(headPtr);
 			}
@@ -38,7 +49,7 @@ void main()
 				printf("\nDatabase is empty, can't display!");
 			}
 			else {
-			displayDatabase(headPtr);
+				displayDatabase(headPtr);
 			}
 			break;
 		case 3:
@@ -98,6 +109,7 @@ void main()
 			}
 			printf("\nGoodbye.");
 			break;
+		// If incorrect input is entered
 		default:
 			printf("\nInvalid Mode, please try again!");
 			break;
