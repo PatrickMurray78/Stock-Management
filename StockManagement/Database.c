@@ -1,5 +1,11 @@
 #include "Database.h"
 
+/*
+	This function checks the save file and if there is stock
+	items in the file, it will fill the database with the first
+	stock item before calling the fillDatabse() function to fill
+	the rest of the database.
+*/
 void init(struct node** top)
 {
 	int numInputs, count = 0;
@@ -20,6 +26,7 @@ void init(struct node** top)
 		numInputs += fscanf(fptr, "%s %d %d %d %d", newNode->lastOrderDate, &newNode->isHazardousChemical,
 			&newNode->department, &newNode->reOrderMonth, &newNode->authority);
 
+		// Add to start of database
 		if (numInputs == 12) {
 			newNode->NEXT = *top;
 			*top = newNode;
@@ -28,6 +35,12 @@ void init(struct node** top)
 	fclose(fptr);
 }
 
+/*
+	The fillDatabase() function is called once the first stock item
+	has been added to the database from the save file. This function
+	disregards the first stock item and adds the rest of the items to
+	the end of the database.
+*/
 void fillDatabase(struct node* top)
 {
 	int numInputs, count = 0;
@@ -36,6 +49,7 @@ void fillDatabase(struct node* top)
 
 	struct node* temp = top;
 
+	// While loop until end of the file is encountered
 	while (!feof(fptr)) {
 		struct node* newNode = (struct node*)malloc(sizeof(struct node));
 		numInputs = fscanf(fptr, "%d", &newNode->number);
@@ -46,11 +60,14 @@ void fillDatabase(struct node* top)
 		numInputs += fscanf(fptr, "%s %d %d %d %d", newNode->lastOrderDate, &newNode->isHazardousChemical,
 			&newNode->department, &newNode->reOrderMonth, &newNode->authority);
 
+		// If this is the first stock item, disregard it as it is 
+		// already in database
 		if (numInputs == 12 && count != 0) {
 			while (temp->NEXT != NULL) {
 				temp = temp->NEXT;
 			}
 
+			// Add stock item to end of database
 			if (temp->NEXT == NULL) {
 				newNode->NEXT = NULL;
 				temp->NEXT = newNode;
@@ -61,6 +78,10 @@ void fillDatabase(struct node* top)
 	fclose(fptr);
 }
 
+/*
+	saveDatabase() is called when program is exited. It saves all contents
+	of the database to a save file "database.txt"
+*/
 void saveDatabase(struct node* top)
 {
 	FILE* fptr;
@@ -68,6 +89,7 @@ void saveDatabase(struct node* top)
 
 	struct node* temp = top;
 
+	// Iterate through database and print each item to file
 	while (temp != NULL) {
 		fprintf(fptr, "%d", temp->number);
 		fprintf(fptr, "\n%s", temp->name);
@@ -81,11 +103,19 @@ void saveDatabase(struct node* top)
 	fclose(fptr);
 }
 
+/*
+	This function adds a stock item to the start of the database. 
+	User is prompted to enter stock details, which has input
+	validation for each input.
+*/
 void addItemAtStart(struct node** top)
 {
+	// Allocate memory to newNode, which is sufficient to store stock details
 	struct node* newNode = (struct node*)malloc(sizeof(struct node));
 	
+	// This is where user enters stock items details.
 	printf("\nPlease enter the following details");
+	// Stock item number is always unique when it is the first stock item
 	do {
 		printf("\nStock Item Number: ");
 		scanf("%d", &newNode->number);
@@ -149,21 +179,28 @@ void addItemAtStart(struct node** top)
 		scanf("%d", &newNode->authority);
 	} while (newNode->authority < 1 || newNode->authority > 3);
 
+	// Add to start
 	newNode->NEXT = *top;
 	*top = newNode;
 }
 
+/*
+	This function adds a stock item to the end of the database.
+	Stock Item Number is also validated to ensure it is unique.
+*/
 void addItemAtEnd(struct node* top)
 {
 	int stockNum;
 	struct node* temp = top;
 	struct node* newNode = (struct node*)malloc(sizeof(struct node));
 
+	// This is where user enters stock items details.
 	printf("\nPlease enter the following details");
 	do {
 		printf("\nStock Item Number: ");
 		scanf("%d", &newNode->number);
 		stockNum = newNode->number;
+		// Validate stock number by calling isUnique()
 	} while (newNode->number < 0 || isUnique(stockNum, temp) == 0);
 	do {
 		printf("Stock Item Name: ");
@@ -172,7 +209,7 @@ void addItemAtEnd(struct node* top)
 	do {
 		printf("Stock Item Supplier Name: ");
 		scanf(" %[^\n]s", newNode->supplierName);
-	} while (strlen(newNode->supplierNumber) > 30);
+	} while (strlen(newNode->supplierName) > 30);
 	do {
 		printf("Stock Item Supplier Contact Number: ");
 		scanf("%s", newNode->supplierNumber);
@@ -224,20 +261,27 @@ void addItemAtEnd(struct node* top)
 		scanf("%d", &newNode->authority);
 	} while (newNode->authority < 1 || newNode->authority > 3);
 
+	// Make temp the last node
 	while (temp->NEXT != NULL) {
 		temp = temp->NEXT;
 	}
-
+	// Add to end
 	newNode->NEXT = NULL;
 	temp->NEXT = newNode;
 }
 
+/*
+	isUnique() is called when checking to make sure stock item number
+	is unique. It returns 1 when number is unique.
+*/
 int isUnique(int stockNum, struct node* top)
 {
 	int num = stockNum;
 	struct node* temp = top;
+	// Iterate through database and check if number already exists
 	while (temp != NULL) {
 		if (stockNum == temp->number) {
+			// Stock number found, exit function and return 0
 			printf("\nStock Number is not unique, please try again");
 			return 0;
 		}
@@ -246,6 +290,10 @@ int isUnique(int stockNum, struct node* top)
 	return 1;
 }
 
+/*
+	This function is used to display all contents of the database to
+	the user.
+*/
 void displayDatabase(struct node* top)
 {
 	char isHazardous[5];
@@ -254,7 +302,10 @@ void displayDatabase(struct node* top)
 	char authority[25];
 	struct node* temp = top;
 
+	// Iterate through database
 	while (temp != NULL) {
+		// createStrings() called to make the output of displayDatabase more
+		// user friendly
 		createStrings(temp, isHazardous, department, reOrderMonth, authority);
 
 		printf("\nStock Item Number: %d", temp->number);
@@ -274,6 +325,10 @@ void displayDatabase(struct node* top)
 	}
 }
 
+/*
+	This function is used to display the details of a certain stock item, 
+	which is searched by user by stock item number or stock item name.
+*/
 void displayItem(struct node* top)
 {
 	char searchName[30];
@@ -292,12 +347,14 @@ void displayItem(struct node* top)
 		scanf("%d", &option);
 	} while (option != 1 && option != 2);
 
+	// Search by Stock Item Number
 	if (option == 1) {
 		printf("\nPlease enter the Stock Item Number");
 		printf("\n=> ");
 		scanf("%d", &searchNum);
 		while (temp != NULL) {
 			if (temp->number == searchNum) {
+				// Stock Item found, print stock item details and exit function
 				createStrings(temp, isHazardous, department, reOrderMonth, authority);
 
 				printf("\nStock Item Number: %d", temp->number);
@@ -317,8 +374,10 @@ void displayItem(struct node* top)
 			}
 			temp = temp->NEXT;
 		}
+		// Stock Item not found
 		printf("\nStock Item number %d not in our database!", searchNum);
 	}
+	// Search by Stock Item Name
 	else {
 		printf("\nPlease enter the Stock Item Name");
 		printf("\n=> ");
@@ -326,6 +385,7 @@ void displayItem(struct node* top)
 		while (temp != NULL) {
 			ret = strcmp(temp->name, searchName);
 			if (ret == 0) {
+				// Stock Item found, print stock item details and exit function
 				createStrings(temp, isHazardous, department, reOrderMonth, authority);
 
 				printf("\nStock Item Number: %d", temp->number);
@@ -345,10 +405,16 @@ void displayItem(struct node* top)
 			}
 			temp = temp->NEXT;
 		}
+		// Stock Item not found
 		printf("\nStock Item name %s not in our database!", searchName);
 	}
 }
 
+/*
+	The updateItem() function searches through the database for a
+	stock item number or stock item name. Once found user is prompted
+	to update certain details for stock item.
+*/
 void updateItem(struct node* top)
 {
 	int option, searchNum, ret, i = 0;
@@ -362,11 +428,13 @@ void updateItem(struct node* top)
 		printf("\n=> ");
 		scanf("%d", &option);
 	} while (option != 1 && option != 2);
+	// Search by Stock Item Number
 	if (option == 1) {
 		printf("\nPlease enter the Stock Item Number");
 		printf("\n=> ");
 		scanf("%d", &searchNum);
 		while (temp != NULL) {
+			// Stock Item found
 			if (temp->number == searchNum) {
 				printf("\nNew Stock Item Supplier Name: ");
 				scanf("%s", temp->supplierName);
@@ -380,11 +448,13 @@ void updateItem(struct node* top)
 		}
 		printf("\nStock Item number %d not in our database!", searchNum);
 	}
+	// Search by Stock Item Name
 	else {
 		printf("\nPlease enter the Stock Item Name");
 		printf("\n=> ");
 		scanf(" %[^\n]s", searchName);
 		while (temp != NULL) {
+			// Stock Item found
 			ret = strcmp(temp->name, searchName);
 			if (ret == 0) {
 				printf("\nNew Stock Item Supplier Name: ");
@@ -401,6 +471,10 @@ void updateItem(struct node* top)
 	}
 }
 
+/*
+	This function removes a stock item from the database, either from
+	the start, from the end or from somewhere in between.
+*/
 void deleteItem(struct node* top, struct node** top2)
 {
 	int searchNum, count = 0;
@@ -411,12 +485,14 @@ void deleteItem(struct node* top, struct node** top2)
 		printf("\nPlease enter Stock Item Number to delete: ");
 		scanf("%d", &searchNum);
 	} while (searchNum < 0);
+
+	// Find Stock Item
 	while (temp->NEXT != NULL && temp->number != searchNum) {
 		count++;
 		prevTemp = temp;
 		temp = temp->NEXT;
 	}
-
+	// Delete at the start of database
 	if (count == 0) {
 		temp = *top2;
 		*top2 = temp->NEXT;
@@ -424,22 +500,28 @@ void deleteItem(struct node* top, struct node** top2)
 		free(temp);
 		return;
 	}
-
+	// Delete when stock item is not at the start or the end
 	if (temp->number == searchNum && temp->NEXT != NULL && count != 0) {
 		prevTemp->NEXT = temp->NEXT;
 		free(temp);
 		return;
 	}
-
+	// Delete at the end of database
 	if (temp->NEXT == NULL && temp->number == searchNum) {
 		prevTemp->NEXT = NULL;
 		free(temp);
 	}
+	// Stock item not found
 	else {
 		printf("\nStock Item %d not found", searchNum);
 	}
 }
 
+/*
+	The generateStats() function calculates certain statistics from all
+	the items in the database. You can choose between A, B and C and also 
+	the department you wish you get the statistics for i.e Office/Maintenance.
+*/
 void generateStats(struct node* top)
 {
 	char option = ' ';
@@ -448,6 +530,7 @@ void generateStats(struct node* top)
 	struct node* temp = top;
 	size = (float)length(top);
 
+	// Menu
 	do {
 		printf("\nA. %% of stock items below the re-order threshold limit");
 		printf("\nB. %% of stock items below twice the re-order threshold limit");
@@ -455,7 +538,7 @@ void generateStats(struct node* top)
 		printf("\n=> ");
 		scanf(" %c", &option);
 	} while (option != 'A' && option != 'B' && option != 'C');
-
+	// Select department menu
 	do {
 		printf("\nPlease select a department");
 		printf("\n1. Office");
@@ -464,9 +547,12 @@ void generateStats(struct node* top)
 		scanf("%d", &department);
 	} while (department != 1 && department != 2);
 
+	// A selected
 	if (option == 'A') {
+		// Office department selected
 		if (department == 1) {
 			while (temp != NULL) {
+				// Increment count if conditions are met
 				if (temp->department == 1) {
 					if (temp->numOfUnits < temp->thresholdLimit) {
 						count++;
@@ -476,6 +562,7 @@ void generateStats(struct node* top)
 			}
 			stockPercentage = (count / size) * 100;
 		}
+		// Maintenance department selected
 		else if (department == 2) {
 			while (temp != NULL) {
 				if (temp->department == 2) {
@@ -489,6 +576,7 @@ void generateStats(struct node* top)
 		}
 		printf("\n%.2f%% of the items are below the re-order threshold limit\n", stockPercentage);
 	}
+	// B selected
 	else if (option == 'B') {
 		if (department == 1) {
 			while (temp != NULL) {
@@ -514,6 +602,7 @@ void generateStats(struct node* top)
 		}
 		printf("\n%.2f%% of the items are below twice the re-order threshold limit\n", stockPercentage);
 	}
+	// C selected
 	else if (option == 'C') {
 		if (department == 1) {
 			while (temp != NULL) {
@@ -541,6 +630,10 @@ void generateStats(struct node* top)
 	}
 }
 
+/*
+	createReport() creates a structured report to "report.txt". It also
+	calculates the statistics and prints to file.
+*/
 void createReport(struct node* top)
 {
 	float stockPercentage, size, count = 0;
@@ -555,6 +648,7 @@ void createReport(struct node* top)
 
 	struct node* temp = top;
 
+	// Iterate through database and print stock items to file
 	while (temp != NULL) {
 		createStrings(temp, isHazardous, department, reOrderMonth, authority);
 
@@ -574,6 +668,7 @@ void createReport(struct node* top)
 		temp = temp->NEXT;
 	}
 	while (temp != NULL) {
+		// Office department
 		if (temp->department == 1) {
 			if (temp->numOfUnits < temp->thresholdLimit) {
 				count++;
@@ -586,6 +681,7 @@ void createReport(struct node* top)
 	fprintf(fptr, "\n%.2f%% of the items are below the re-order threshold limit in the Office Department", stockPercentage);
 	count = 0;
 	while (temp != NULL) {
+		// Maintenance department
 		if (temp->department == 2) {
 			if (temp->numOfUnits < temp->thresholdLimit) {
 				count++;
@@ -598,6 +694,7 @@ void createReport(struct node* top)
 	fprintf(fptr, "\n%.2f%% of the items are below the re-order threshold limit in the Maintenance Department", stockPercentage);
 	count = 0;
 	while (temp != NULL) {
+		// Office department
 		if (temp->department == 1) {
 			if (temp->numOfUnits < (temp->thresholdLimit * 2)) {
 				count++;
@@ -610,6 +707,7 @@ void createReport(struct node* top)
 	fprintf(fptr, "\n%.2f%% of the items are below twice the re-order threshold limit in the Office Department", stockPercentage);
 	count = 0;
 	while (temp != NULL) {
+		// Maintenance department
 		if (temp->department == 2) {
 			if (temp->numOfUnits < (temp->thresholdLimit * 2)) {
 				count++;
@@ -622,6 +720,7 @@ void createReport(struct node* top)
 	fprintf(fptr, "\n%.2f%% of the items are below twice the re-order threshold limit in the Maintenance Department", stockPercentage);
 	count = 0;
 	while (temp != NULL) {
+		// Office department
 		if (temp->department == 1) {
 			if (temp->numOfUnits > (temp->thresholdLimit * 2)) {
 				count++;
@@ -634,6 +733,7 @@ void createReport(struct node* top)
 	fprintf(fptr, "\n%.2f%% of the items are above twice the re-order threshold limit in the Office Department", stockPercentage);
 	count = 0;
 	while (temp != NULL) {
+		// Maintenance department
 		if (temp->department == 2) {
 			if (temp->numOfUnits > (temp->thresholdLimit * 2)) {
 				count++;
@@ -643,37 +743,50 @@ void createReport(struct node* top)
 	}
 	stockPercentage = (count / size) * 100;
 	fprintf(fptr, "\n%.2f%% of the items are above twice the re-order threshold limit in the Maintenance Department", stockPercentage);
-	count = 0;
 	fclose(fptr);
 }
 
+/*
+	This function sorts all the stock items in order of their monetary
+	value.
+*/
 void stockInOrder(struct node* top)
 {
+	// Declare variables
 	int sorted, count, highestStockNum;
 	float highest, newHighest, value;
 	struct node* temp = top;
+
+	// Initialise variables
 	sorted = count = highestStockNum = 0;
 	highest = (float)temp->numOfUnits * temp->costPerUnit;
 	newHighest = highest;
 	highestStockNum = temp->number;
-
 	for (int i = 0; i < length(top); i++) {
 		count++;
 		while (temp != NULL) {
 			value = temp->numOfUnits * temp->costPerUnit;
+			// Find the highest value
 			if (value > highest && count == 1) {
 				highest = value;
 				newHighest = highest;
 				highestStockNum = temp->number;
 			}
+			// Find the next highest values
 			else if (value < highest && count != 1) {
+				// If the newHighest is equal to the highest, make this
+				// value the newHighest
 				if (newHighest == highest) {
 					newHighest = value;
 				}
+				// If the value is lower than the highest but greater than the
+				// newHighest, make this value the newHighest
 				if (value > newHighest && value < highest) {
 					newHighest = value;
 					highestStockNum = temp->number;
 				}
+				// If the value is equal to the newhighest but less than the highest
+				// make this value the newhighest
 				else if (value == newHighest && value < highest) {
 					newHighest = value;
 					highestStockNum = temp->number;
@@ -689,6 +802,10 @@ void stockInOrder(struct node* top)
 	printf("\n");
 }
 
+/*
+	The length() function simply calculates the length of the database by
+	iterating through the databse and incrementing i;
+*/
 int length(struct node* top)
 {
 	int i = 0;
@@ -701,6 +818,11 @@ int length(struct node* top)
 	return i;
 }
 
+/*
+	This function creates strings from some of the options the user selected.
+	This makes the output more user friendly and also makes the database easier 
+	to work with prior to stringifying some elements in the databae.
+*/
 char createStrings(struct node* temp, char isHazardous[5], char department[15], char reOrderMonth[20], char authority[20])
 {
 	if (temp->isHazardousChemical == 1) {
