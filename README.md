@@ -34,8 +34,8 @@ user to login.
  5. Delete Stock Item
  6. Generate Statistics
  7. Create Report
- 8. List Stock Items in order of Monetary Value<br/>
--1. Exit
+ 8. List Stock Items in order of Monetary Value
+ 
 - There is input validation on every input entered, the options in the menu work as follows
 
 ### Add Stock Item
