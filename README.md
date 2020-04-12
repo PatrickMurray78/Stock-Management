@@ -27,15 +27,15 @@ user to login.
 - `init()` is then called by `Main.c`, this function simply checks "database.txt" to check if there is any saved stock items, if there is this function simply adds the first stock item to the database.
 - The next function called is `fillDatabase()`, this is also called from `Main.c` and iterates through the rest of the file, disregarding the first stock item and adding each stock item thereafter to the database at the end.
 - After the database has been filled with existing data, the main menu loop commences. The main loop has 8 options to choose from.
-	1. Add Stock Item
-	2. Display all Stock Items
-	3. Display Stock Item
-	4. Update Stock Item
-	5. Delete Stock Item
-	6. Generate Statistics
-	7. Create Report
-	8. List Stock Items in order of Monetary Value
-   -1. Exit
+1. Add Stock Item
+2. Display all Stock Items
+3. Display Stock Item
+4. Update Stock Item
+5. Delete Stock Item
+6. Generate Statistics
+7. Create Report
+8. List Stock Items in order of Monetary Value
+-1. Exit
 - There is input validation on every input entered, the options in the menu work as follows
 
 ### Add Stock Item
@@ -63,8 +63,7 @@ If found, the stock item is deleted from the start, the end or somewhere in betw
 The user is prompted with a menu with three options.
  1. A. % of stock items below the re-order threshold limit.
  2. B. % of stock items below twice the re-order threshold limit.
- 3. C. % of stock items above twice the re-order threshold limit.
-<br/>
+ 3. C. % of stock items above twice the re-order threshold limit.<br/>
 Once the user has selected an option they are then prompted to enter the department they wish to generate the statistics for.
 
 ### Create Report
