@@ -22,11 +22,11 @@ user to login.
 3. The user has 8 options to choose from or can choose -1 to exit and save the current database.
 
 ## Usage
-1. When the program starts `initLogin()` is called from `Main.c` and initiates the login process by opening the "login.txt" file and adding each username and password to the `Login` struct linked list.
-2. `login()` is called by `initLogin()`, the purpose of this function is to ask the user for a username and password. The function iterates through the `Login` linked list and checks to find a matching username. If found, the password is then validated by comparing it against the node with the matching username. If the password doesnt match, the user is notified and is asked to enter a username and password until the correct credentials are entered. User is then brought back to `Main.c`.
-3. `init()` is then called by `Main.c`, this function simply checks "database.txt" to check if there is any saved stock items, if there is this function simply adds the first stock item to the database.
-4. The next function called is `fillDatabase()`, this is also called from `Main.c` and iterates through the rest of the file, disregarding the first stock item and adding each stock item thereafter to the database at the end.
-5. After the database has been filled with existing data, the main menu loop commences. The main loop has 8 options to choose from.
+- When the program starts `initLogin()` is called from `Main.c` and initiates the login process by opening the "login.txt" file and adding each username and password to the `Login` struct linked list.
+- `login()` is called by `initLogin()`, the purpose of this function is to ask the user for a username and password. The function iterates through the `Login` linked list and checks to find a matching username. If found, the password is then validated by comparing it against the node with the matching username. If the password doesnt match, the user is notified and is asked to enter a username and password until the correct credentials are entered. User is then brought back to `Main.c`.
+- `init()` is then called by `Main.c`, this function simply checks "database.txt" to check if there is any saved stock items, if there is this function simply adds the first stock item to the database.
+- The next function called is `fillDatabase()`, this is also called from `Main.c` and iterates through the rest of the file, disregarding the first stock item and adding each stock item thereafter to the database at the end.
+- After the database has been filled with existing data, the main menu loop commences. The main loop has 8 options to choose from.
 	1. Add Stock Item
 	2. Display all Stock Items
 	3. Display Stock Item
@@ -36,7 +36,7 @@ user to login.
 	7. Create Report
 	8. List Stock Items in order of Monetary Value
    -1. Exit
-6. There is input validation on every input entered, the options in the menu work as follows
+- There is input validation on every input entered, the options in the menu work as follows
 
 ### Add Stock Item
 If the database is empty, we call `addItemAtStart`. If the database is not empty we call `addItemAtEnd`.
@@ -64,6 +64,7 @@ The user is prompted with a menu with three options.
  1. A. % of stock items below the re-order threshold limit.
  2. B. % of stock items below twice the re-order threshold limit.
  3. C. % of stock items above twice the re-order threshold limit.
+<br/>
 Once the user has selected an option they are then prompted to enter the department they wish to generate the statistics for.
 
 ### Create Report
