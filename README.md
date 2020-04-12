@@ -38,28 +38,28 @@ user to login.
  
 - There is input validation on every input entered, the options in the menu work as follows
 
-### Add Stock Item
+## Add Stock Item
 If the database is empty, we call `addItemAtStart`. If the database is not empty we call `addItemAtEnd`.
 For both of these functions, the user is prompted to enter the new stock details which has input validation for each input. The only difference between these functions is how the `newNode` is added to the database.
 
-### Display All Stock Items
+## Display All Stock Items
 This function simply displays all contents of the database to the user. It does so by iterating through the database and for each node, it displays the corresponding formatted details to screen.
 
-### Display Stock Item
+## Display Stock Item
 The user is prompted with a menu asking the user if they would like to search by Stock Item Number or Stock Item Name.
 The user is then prompted to enter the number or name they wish to search for.
 If found, the details of the stock item are displayed to screen and function exits.
 
-### Update Stock Item
+## Update Stock Item
 The user is prompted with a menu asking the user if they would like to search by Stock Item Number or Stock Item Name.
 The user is then prompted to enter the number or name they wish to search for.
 If found, the user is then prompted to update the Stock Item Supplier Name, Stock Item Supplier Contact Number and the Re-order threshold limit.
 
-### Delete Stock Item
+## Delete Stock Item
 The user is prompted to enter a stock item number to delete.
 If found, the stock item is deleted from the start, the end or somewhere in between depending on which conditions were met.
 
-### Generate Statistics
+## Generate Statistics
 The user is prompted with a menu with three options.
  1. A. % of stock items below the re-order threshold limit.
  2. B. % of stock items below twice the re-order threshold limit.
@@ -67,19 +67,30 @@ The user is prompted with a menu with three options.
  
 Once the user has selected an option they are then prompted to enter the department they wish to generate the statistics for.
 
-### Create Report
+## Create Report
 When this function is selected by the user, "report.txt" is opened.
 Every stock item in the database is formatted and output to the report file.
 Finally the three statistic options are generated for each department at the botto of the file.
 This file is then closed and saved.
 
-### List Stock Items in order of Monetary Value
+## List Stock Items in order of Monetary Value
 The `stockInOrder()` function iterates through the database once for each stock item in the database.
 The highest value is the first one found, this is then output to screen.
 Through each subsequent iteration, the next highest is found and output to screen using numerous if/else's and certain conditions.
 This continues until the full database has been sorted.
 
-### Exit
+## Exit
 Once the user enters -1 in the menu, `saveDatabase()` is then called. 
 This function saves all contents of the database to a save file called "database.txt".
 A goodbye message is then displayed, before the program exits.
+
+## Design Decisions
+Throughout my development of this project, there were numerous design decisions I made.
+- I chose to use two header files, `login.h` and `database.h`.
+- I used three `.c` files, `login.c`, `database.c` and `main.c`.
+- I found that by splitting my code into three main areas, it really helped keep a nice structure throughout.
+- The user's experience was something I took into account through every aspect of the program. I made the program as user friendly as I could with appropriate headers and a well structured output.
+- I was unable to merge `addItemToStart()` and `addItemToEnd()` due to temp always being null when adding item to the end after adding an item to the start.
+- When adding to the end, `isUnique()` is called to ensure the stock item number is unique. I chose to create a function for this as it made my code neater and it was easier to see what was going on inside `addItemAtEnd()` when all this code was elsewhere.
+- I created another function called `createStrings()` which takes in multiple char arrays as parameters along with temp. I chose to use numbers for some of the variables inside the `Database` linked list, this made it easier to work with the numbers. So, when I was outputting to the user these numbers I used needed to be converted to strings using ultiple if/else statements. This made the output much easier to read and understand. This function is called by three other functions so it made a lot more sense to create a seperate function, rather than using duplicated code in these three functions.
+- I believe if you have never used this program before, you would have no issue in using this program for the first time due to how user friendly this program is.
