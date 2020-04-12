@@ -20,14 +20,17 @@ void main()
 
 	// Menu
 	do {
-		printf("\n\n1. Add Stock Item");
+		printf("\n\n-------------------------------------------------");
+		printf("\n=               Stock Management                =");
+		printf("\n-------------------------------------------------");
+		printf("\n1. Add Stock Item");
 		printf("\n2. Display All Stock Items");
 		printf("\n3. Display Stock Item");
 		printf("\n4. Update Stock Item");
 		printf("\n5. Delete Stock Item");
 		printf("\n6. Generate Statistics");
-		printf("\n7. Print All Stock Items To File");
-		printf("\n8. List Stock Items In Order Of Monetary Value");
+		printf("\n7. Create Report");
+		printf("\n8. List Stock Items in order of Monetary Value");
 		printf("\nPlease enter mode: ");
 		scanf("%d", &mode);
 
