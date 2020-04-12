@@ -1,54 +1,77 @@
-Stock Item Number: 86759
-Stock Item Name: Rubber
-Stock Item Supplier Name: RubberCo
-Stock Item Supplier Contact Number: 792822891
-Re-order threshold limit: 500
-Number of Units: 10000
-Cost per Unit: 14.30
-Last Order Date(DDMMYYYY): 9197748
+Stock Item Number: 5555
+Stock Item Name: Pen
+Stock Item Supplier Name: Bic
+Stock Item Supplier Contact Number: 0915674635
+Re-order threshold limit: 200
+Number of Units: 254
+Cost per Unit: 0.10
+Last Order Date(DDMMYYYY): 11066424
 Does this item need to be stored in a hazardous chemical store?
 -> No
-Department: Maintenance
-Re-order Month: No Specified Month
+Department: Office
+Re-order Month: February
 Authority: Departent Manager
 
-Stock Item Number: 56575
-Stock Item Name: Bread
-Stock Item Supplier Name: Pat
-Stock Item Supplier Contact Number: 943657485
-Re-order threshold limit: 1200
-Number of Units: 10000
-Cost per Unit: 0.95
-Last Order Date(DDMMYYYY): 9234172
+Stock Item Number: 3242
+Stock Item Name: Eraser
+Stock Item Supplier Name: Staedtler
+Stock Item Supplier Contact Number: 0968790697
+Re-order threshold limit: 300
+Number of Units: 654
+Cost per Unit: 0.20
+Last Order Date(DDMMYYYY): 11066760
+Does this item need to be stored in a hazardous chemical store?
+-> No
+Department: Office
+Re-order Month: August
+Authority: Managing Director
+
+Stock Item Number: 7676
+Stock Item Name: Screw
+Stock Item Supplier Name: Metal Inc
+Stock Item Supplier Contact Number: 0867675454
+Re-order threshold limit: 200
+Number of Units: 54
+Cost per Unit: 0.05
+Last Order Date(DDMMYYYY): 11066928
 Does this item need to be stored in a hazardous chemical store?
 -> No
 Department: Maintenance
-Re-order Month: No Specified Month
-Authority: Managing Director
+Re-order Month: August
+Authority: Departent Manager
+
+Stock Item Number: 7564
+Stock Item Name: Window Pane
+Stock Item Supplier Name: Glass Inc
+Stock Item Supplier Contact Number: 0917687575
+Re-order threshold limit: 120
+Number of Units: 452
+Cost per Unit: 20.50
+Last Order Date(DDMMYYYY): 11067096
+Does this item need to be stored in a hazardous chemical store?
+-> No
+Department: Maintenance
+Re-order Month: August
+Authority: Financial Controller
 
 Stock Item Number: 7654
-Stock Item Name: Tyre
-Stock Item Supplier Name: Rubber
-Stock Item Supplier Contact Number: 9456475
-Re-order threshold limit: 1200
-Number of Units: 15000
-Cost per Unit: 12.25
-Last Order Date(DDMMYYYY): 9234316
+Stock Item Name: Hydrochloric Acid
+Stock Item Supplier Name: Pharma Co
+Stock Item Supplier Contact Number: 0918765463
+Re-order threshold limit: 20
+Number of Units: 33
+Cost per Unit: 5.24
+Last Order Date(DDMMYYYY): 11079000
 Does this item need to be stored in a hazardous chemical store?
 -> Yes
-Department: Office
-Re-order Month: No Specified Month
-Authority: Managing Director
+Department: Maintenance
+Re-order Month: August
+Authority: Departent Manager
 
 
-There are 0.00% items below the re-order threshold limit in the Office Department
-
-There are 66.67% items below the re-order threshold limit in the Maintenance Department
-
-There are 33.33% items below twice the re-order threshold limit in the Office Department
-
-There are 66.67% items below twice the re-order threshold limit in the Maintenance Department
-
-There are 0.00% items above twice the re-order threshold limit in the Office Department
-
-There are 0.00% items above twice the re-order threshold limit in the Maintenance Department
+0.00% of the items are below the re-order threshold limit in the Office Department
+20.00% of the items are below the re-order threshold limit in the Maintenance Department
+20.00% of the items are below twice the re-order threshold limit in the Office Department
+40.00% of the items are below twice the re-order threshold limit in the Maintenance Department
+20.00% of the items are above twice the re-order threshold limit in the Office Department
+20.00% of the items are above twice the re-order threshold limit in the Maintenance Department
